@@ -85,7 +85,7 @@ class UniversityReportGetter:
             json.dump(university, file, indent=4)
 
 
-def command_string_parser():
+def command_line_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('-gc', default=GROUPS_COUNT)
     parser.add_argument('-sc', default=STUDENTS_IN_GROUP_COUNT)
@@ -96,15 +96,15 @@ def command_string_parser():
 
 
 def main():
-    command_string_args = command_string_parser()
+    command_line_args = command_line_parser()
 
     university = University()
-    university.create_groups(command_string_args['gc'])
+    university.create_groups(int(command_line_args['gc']))
     for group in university.groups:
-        group.create_students(command_string_args['sc'])
+        group.create_students(int(command_line_args['sc']))
 
     report_getter = UniversityReportGetter(university)
-    report_getter.get_report(command_string_args['type'])
+    report_getter.get_report(command_line_args['type'])
 
 
 if __name__ == '__main__':
