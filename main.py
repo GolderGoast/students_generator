@@ -57,7 +57,7 @@ class UniversityReportGetter:
         if report_type == 'excel':
             self._get_xlsx_report()
         elif report_type == 'json':
-            self.get_json_report()
+            self._get_json_report()
         else:
             print('Указан неверный формат отчета!')
 
@@ -73,7 +73,7 @@ class UniversityReportGetter:
 
         wb.save('report.xlsx')
 
-    def get_json_report(self):
+    def _get_json_report(self):
         university = {}
         for g_num, group in enumerate(self.university.groups):
             university[f'Group_{g_num + 1}'] = {}
