@@ -1,8 +1,9 @@
-import argparse
 import json
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 from random import randint, choice, uniform
 
+import typer
 from faker import Faker
 from openpyxl import Workbook
 
@@ -19,7 +20,7 @@ class University(UniversityGetterGroup):
     def __init__(self):
         self.groups = []
 
-    def create_groups(self, groups_count):
+    def create_groups(self, groups_count: int) -> None:
         for _ in range(groups_count):
             self.groups.append(Group())
 
@@ -38,7 +39,7 @@ class Group(GroupGetterStudent):
     def __init__(self):
         self.students = []
 
-    def create_students(self, students_count):
+    def create_students(self, students_count: int) -> None:
         for _ in range(students_count):
             fake = Faker('ru_RU')
             gender = choice(('М', 'Ж',))
@@ -60,14 +61,14 @@ class Group(GroupGetterStudent):
             yield student
 
 
+@dataclass()
 class Student:
-    def __init__(self, fio, age, gender, weight, height, average_score):
-        self.fio = fio
-        self.age = age
-        self.gender = gender
-        self.weight = weight
-        self.height = height
-        self.average_score = average_score
+    fio: str
+    age: int
+    gender: str
+    weight: int
+    height: int
+    average_score: float
 
 
 class UniversityReportGetter(ABC):
@@ -83,7 +84,7 @@ class XLSXReportGetter(UniversityReportGetter):
     def __init__(self, group_getter):
         super().__init__(group_getter=group_getter)
 
-    def get_report(self):
+    def get_report(self) -> None:
         wb = Workbook()
         ws = wb.active
         wb.remove(ws)
@@ -100,7 +101,7 @@ class JsonReportGetter(UniversityReportGetter):
     def __init__(self, group_getter):
         super().__init__(group_getter=group_getter)
 
-    def get_report(self):
+    def get_report(self) -> None:
         university = {}
         for g_num, group in enumerate(self.group_getter.get_group()):
             university[f'Group_{g_num + 1}'] = {}
@@ -112,28 +113,20 @@ class JsonReportGetter(UniversityReportGetter):
             json.dump(university, file, indent=4)
 
 
-def command_line_parser():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-gc', default=GROUPS_COUNT)
-    parser.add_argument('-sc', default=STUDENTS_IN_GROUP_COUNT)
-    parser.add_argument('-type', default=TYPE_REPORT)
-    args = vars(parser.parse_args())
-
-    return args
+app = typer.Typer()
 
 
-def main():
-    command_line_args = command_line_parser()
-
+@app.command()
+def main(gc: int = GROUPS_COUNT, sc: int = STUDENTS_IN_GROUP_COUNT, rtype: str = TYPE_REPORT):
     university = University()
-    university.create_groups(int(command_line_args['gc']))
+    university.create_groups(gc)
     for group in university.groups:
-        group.create_students(int(command_line_args['sc']))
+        group.create_students(sc)
 
-    if command_line_args['type'] == 'excel':
+    if rtype == 'excel':
         report = XLSXReportGetter(group_getter=university)
         report.get_report()
-    elif command_line_args['type'] == 'json':
+    elif rtype == 'json':
         report = JsonReportGetter(group_getter=university)
         report.get_report()
     else:
@@ -141,4 +134,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    app()
