@@ -1,5 +1,6 @@
 import argparse
 import json
+from abc import ABC, abstractmethod
 from random import randint, choice, uniform
 
 from faker import Faker
@@ -49,19 +50,20 @@ class Student:
         self.average_score = average_score
 
 
-class UniversityReportGetter:
+class UniversityReportGetter(ABC):
     def __init__(self, university):
         self.university = university
 
-    def get_report(self, report_type):
-        if report_type == 'excel':
-            self._get_xlsx_report()
-        elif report_type == 'json':
-            self._get_json_report()
-        else:
-            print('Указан неверный формат отчета!')
+    @abstractmethod
+    def get_report(self):
+        pass
 
-    def _get_xlsx_report(self):
+
+class XLSXReportGetter(UniversityReportGetter):
+    def __init__(self, university):
+        super().__init__(university=university)
+
+    def get_report(self):
         wb = Workbook()
         ws = wb.active
         wb.remove(ws)
@@ -73,7 +75,12 @@ class UniversityReportGetter:
 
         wb.save('report.xlsx')
 
-    def _get_json_report(self):
+
+class JsonReportGetter(UniversityReportGetter):
+    def __init__(self, university):
+        super().__init__(university=university)
+
+    def get_report(self):
         university = {}
         for g_num, group in enumerate(self.university.groups):
             university[f'Group_{g_num + 1}'] = {}
@@ -103,8 +110,14 @@ def main():
     for group in university.groups:
         group.create_students(int(command_line_args['sc']))
 
-    report_getter = UniversityReportGetter(university)
-    report_getter.get_report(command_line_args['type'])
+    if command_line_args['type'] == 'excel':
+        report = XLSXReportGetter(university=university)
+        report.get_report()
+    elif command_line_args['type'] == 'json':
+        report = JsonReportGetter(university=university)
+        report.get_report()
+    else:
+        print('Указан неверный формат отчета!')
 
 
 if __name__ == '__main__':
