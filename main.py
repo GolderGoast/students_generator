@@ -9,7 +9,13 @@ from openpyxl import Workbook
 from config import GROUPS_COUNT, STUDENTS_IN_GROUP_COUNT, TYPE_REPORT
 
 
-class University:
+class UniversityGetterGroup(ABC):
+    @abstractmethod
+    def get_group(self):
+        pass
+
+
+class University(UniversityGetterGroup):
     def __init__(self):
         self.groups = []
 
@@ -17,8 +23,18 @@ class University:
         for _ in range(groups_count):
             self.groups.append(Group())
 
+    def get_group(self):
+        for group in self.groups:
+            yield group
 
-class Group:
+
+class GroupGetterStudent(ABC):
+    @abstractmethod
+    def get_student(self):
+        pass
+
+
+class Group(GroupGetterStudent):
     def __init__(self):
         self.students = []
 
@@ -39,6 +55,10 @@ class Group:
                               average_score=average_score)
             self.students.append(student)
 
+    def get_student(self):
+        for student in self.students:
+            yield student
+
 
 class Student:
     def __init__(self, fio, age, gender, weight, height, average_score):
@@ -51,8 +71,8 @@ class Student:
 
 
 class UniversityReportGetter(ABC):
-    def __init__(self, university):
-        self.university = university
+    def __init__(self, group_getter):
+        self.group_getter = group_getter
 
     @abstractmethod
     def get_report(self):
@@ -60,31 +80,31 @@ class UniversityReportGetter(ABC):
 
 
 class XLSXReportGetter(UniversityReportGetter):
-    def __init__(self, university):
-        super().__init__(university=university)
+    def __init__(self, group_getter):
+        super().__init__(group_getter=group_getter)
 
     def get_report(self):
         wb = Workbook()
         ws = wb.active
         wb.remove(ws)
-        for num, group in enumerate(self.university.groups):
+        for num, group in enumerate(self.group_getter.get_group()):
             ws = wb.create_sheet(f'Группа_{num + 1}')
             ws.append(['ФИО', 'Возраст', 'Пол', 'Вес', 'Рост', 'Средний балл'])
-            for student in group.students:
+            for student in group.get_student():
                 ws.append(list(vars(student).values()))
 
         wb.save('report.xlsx')
 
 
 class JsonReportGetter(UniversityReportGetter):
-    def __init__(self, university):
-        super().__init__(university=university)
+    def __init__(self, group_getter):
+        super().__init__(group_getter=group_getter)
 
     def get_report(self):
         university = {}
-        for g_num, group in enumerate(self.university.groups):
+        for g_num, group in enumerate(self.group_getter.get_group()):
             university[f'Group_{g_num + 1}'] = {}
-            for s_num, student in enumerate(group.students):
+            for s_num, student in enumerate(group.get_student()):
                 student_data = list(vars(student).values())
                 university[f'Group_{g_num + 1}'][f'Student_{s_num + 1}'] = dict(
                     zip(['ФИО', 'Возраст', 'Пол', 'Вес', 'Рост', 'Средний балл'], student_data))
@@ -111,10 +131,10 @@ def main():
         group.create_students(int(command_line_args['sc']))
 
     if command_line_args['type'] == 'excel':
-        report = XLSXReportGetter(university=university)
+        report = XLSXReportGetter(group_getter=university)
         report.get_report()
     elif command_line_args['type'] == 'json':
-        report = JsonReportGetter(university=university)
+        report = JsonReportGetter(group_getter=university)
         report.get_report()
     else:
         print('Указан неверный формат отчета!')
