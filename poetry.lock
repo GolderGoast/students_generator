@@ -181,4 +181,4 @@ test = ["black (>=22.3.0,<23.0.0)", "coverage (>=6.2,<7.0)", "isort (>=5.0.6,<6.
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "a36d1c9bd12ac5f49698598f4e43b63eb481e3a836b0a863239eae89917b4b60"
+content-hash = "866f35b06359d414e594b5c56b19c4f51f32caaa016877b9f808b9f2d9572872"
