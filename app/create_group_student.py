@@ -7,9 +7,10 @@ from faker import Faker
 class FakeStudentData(IFakerStudentData):
     def __init__(self, faker: Faker):
         self.faker = faker
+        self.gender = choice(['М', 'Ж'])
 
     def get_fullname(self) -> str:
-        if self.get_gender() == 'М':
+        if self.gender == 'М':
             return self.faker.name_male()
         return self.faker.name_female()
 
@@ -17,7 +18,7 @@ class FakeStudentData(IFakerStudentData):
         return self.faker.random_int(18, 26)
 
     def get_gender(self) -> str:
-        return choice(['М', 'Ж'])
+        return self.gender
 
     def get_height(self) -> int:
         return self.faker.random_int(150, 210)
