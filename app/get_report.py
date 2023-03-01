@@ -61,3 +61,29 @@ class JsonReport(IReportGetter):
                 )
         with open(f"{self.report_path}.json", "w", encoding="utf8") as file:
             json.dump(report, file, indent=4, ensure_ascii=False)
+
+
+class PDFReport(IReportGetter):
+    def get_report(self):
+        from fpdf import FPDF
+
+        pdf = FPDF()
+        pdf.add_font("DejaVu", "", "app/fonts_for_pdf/DejaVuSansCondensed.ttf", uni=True)
+        pdf.add_font("DejaVu", "B", "app/fonts_for_pdf/DejaVuSansCondensed-Bold.ttf", uni=True)
+
+        for group in self.groups:
+            pdf.add_page()
+            pdf.set_font("DejaVu", size=25, style="B")
+            pdf.cell(400, 15, txt=f"Группа {group.name}", ln=1)
+
+            for student in group.students:
+                pdf.set_font("DejaVu", size=10, style="")
+                pdf.cell(
+                    400,
+                    8,
+                    txt=f"- {student.full_name} - Возраст: {student.age}, Пол: {student.gender},"
+                    f" Рост: {student.height}, Вес: {student.weight}, Средний балл: {student.average_score}",
+                    ln=1,
+                )
+
+        pdf.output(f"{self.report_path}.pdf")

@@ -3,10 +3,10 @@ from faker import Faker
 
 from config import GROUPS_COUNT, STUDENTS_IN_GROUP_COUNT, TYPE_REPORT
 from create_group_student import GroupCreator, StudentCreator, FakeStudentData, FakeGroupData, Group
-from get_report import JsonReport, XLSXReport, IReportGetter
+from get_report import JsonReport, XLSXReport, PDFReport, IReportGetter
 from group_builder import GroupsBuilder
 
-REPORT_TYPES = {"xlsx": XLSXReport, "json": JsonReport}
+REPORT_TYPES = {"xlsx": XLSXReport, "json": JsonReport, "pdf": PDFReport}
 
 app = typer.Typer()
 
