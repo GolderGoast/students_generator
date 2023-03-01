@@ -1,5 +1,7 @@
 <h1>Скрипт для получения отчета по группам и студентам университета в форматах xlsx и json.</h1>
 
+![Build status](https://github.com/GolderGoast/get_report_about_groups_and_students_in_university/actions/workflows/checks.yml/badge.svg?branch=master)
+
 <h3>При запуске скрипта отредактировать файл [config.py](app/config.py):</h3>
 
 GROUPS_COUNT - количество групп в университете;  
