@@ -1,20 +1,32 @@
+import typer
 from faker import Faker
 
-from app.config import GROUPS_COUNT, STUDENTS_IN_GROUP_COUNT
-from app.get_report import TypeReport
-from create_group_student import StudentCreator, FakeStudentData, GroupCreator, FakeGroupDada
+from config import GROUPS_COUNT, STUDENTS_IN_GROUP_COUNT, TYPE_REPORT
+from create_group_student import GroupCreator, StudentCreator, FakeStudentData, FakeGroupData, Group
+from get_report import JsonReport, XLSXReport, IReportGetter
+from group_builder import GroupsBuilder
 
-faker = Faker('ru_RU')
+REPORT_TYPES = {"xlsx": XLSXReport, "json": JsonReport}
 
-groups = []
-for _ in range(GROUPS_COUNT):
-    students = []
-    for _ in range(STUDENTS_IN_GROUP_COUNT):
-        students_creator = StudentCreator(FakeStudentData(faker))
-        students.append(students_creator.create_student())
-
-    group_creator = GroupCreator(FakeGroupDada(faker), students)
-    groups.append(group_creator.create_group())
+app = typer.Typer()
 
 
-report_typer = TypeReport()
+@app.command()
+def main(gc: int = GROUPS_COUNT, sc: int = STUDENTS_IN_GROUP_COUNT, rtype: str = TYPE_REPORT) -> None:
+    fake_student_data = FakeStudentData(faker=Faker("ru_RU"))
+    fake_group_data = FakeGroupData(faker=Faker("ru_RU"))
+
+    group_creator = GroupCreator(faker=fake_group_data)
+    student_creator = StudentCreator(faker=fake_student_data)
+
+    builder = GroupsBuilder(
+        group_creator=group_creator, student_creator=student_creator, groups_count=gc, students_count=sc
+    )
+    groups: list[Group] = builder.run()
+
+    report: IReportGetter = REPORT_TYPES[rtype](groups)
+    report.get_report()
+
+
+if __name__ == "__main__":
+    app()

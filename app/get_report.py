@@ -1,22 +1,11 @@
-import json
 from abc import ABC, abstractmethod
 
-from openpyxl.workbook import Workbook
-
 from entities import Group
-from config import TYPE_REPORT
-
-
-class ITypeReport(ABC):
-    @abstractmethod
-    def get_type(self):
-        pass
 
 
 class IReportGetter(ABC):
-    def __init__(self, groups: list[Group], report_typer: ITypeReport, report_path: str = 'report'):
+    def __init__(self, groups: list[Group], report_path: str = "report"):
         self.groups = groups
-        self.report_type = report_typer.get_type()
         self.report_path = report_path
 
     @abstractmethod
@@ -24,21 +13,15 @@ class IReportGetter(ABC):
         pass
 
 
-class TypeReport(ITypeReport):
-    def __init__(self, report_type: str = TYPE_REPORT):
-        self.report_type = report_type
-
-    def get_type(self) -> str:
-        return self.report_type
-
-
-class XLSXReportGetter(IReportGetter):
+class XLSXReport(IReportGetter):
     def get_report(self) -> None:
+        from openpyxl.workbook import Workbook
+
         wb = Workbook()
         ws = wb.active
         wb.remove(ws)
         for group in self.groups:
-            ws = wb.create_sheet(f"Группа_{group.name}")
+            ws = wb.create_sheet(f"Группа {group.name}")
             ws.append(
                 [
                     "ФИО",
@@ -52,17 +35,19 @@ class XLSXReportGetter(IReportGetter):
             for student in group.students:
                 ws.append(list(vars(student).values()))
 
-        wb.save(f'{self.report_path}.{self.report_type}')
+        wb.save(f"{self.report_path}.xlsx")
 
 
-class JsonReportGetter(IReportGetter):
+class JsonReport(IReportGetter):
     def get_report(self) -> None:
-        university = {}
+        import json
+
+        report = {}
         for group in self.groups:
-            university[f"Group_{group.name}"] = {}
+            report[f"Group {group.name}"] = {}
             for student in group.students:
                 student_data = list(vars(student).values())[1:]
-                university[f"Group_{group.name}"][f"Student_{student.full_name}"] = dict(
+                report[f"Group {group.name}"][f"Student {student.full_name}"] = dict(
                     zip(
                         [
                             "Возраст",
@@ -74,5 +59,5 @@ class JsonReportGetter(IReportGetter):
                         student_data,
                     )
                 )
-        with open("report.json", "w", encoding="utf8") as file:
-            json.dump(university, file, indent=4)
+        with open(f"{self.report_path}.json", "w", encoding="utf8") as file:
+            json.dump(report, file, indent=4, ensure_ascii=False)

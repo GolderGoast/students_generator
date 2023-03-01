@@ -18,7 +18,7 @@ class Group:
     students: list[Student]
 
 
-class IFakerStudentData(ABC):
+class IFakeStudentDataCreator(ABC):
     @abstractmethod
     def get_fullname(self) -> str:
         pass
@@ -44,26 +44,25 @@ class IFakerStudentData(ABC):
         pass
 
 
-class IFakerGroupData(ABC):
+class IFakeGroupDataCreator(ABC):
     @abstractmethod
     def get_name(self) -> str:
         pass
 
 
 class IStudentCreator(ABC):
-    def __init__(self, faker_student_data: IFakerStudentData):
-        self.faker_student_data = faker_student_data
+    def __init__(self, faker: IFakeStudentDataCreator):
+        self.faker = faker
 
     @abstractmethod
-    def create_student(self) -> Student:
+    def run(self) -> Student:
         pass
 
 
 class IGroupCreator(ABC):
-    def __init__(self, faker_group_data: IFakerGroupData, students: list[Student]):
-        self.faker_group_data = faker_group_data
-        self.students = students
+    def __init__(self, faker: IFakeGroupDataCreator):
+        self.faker = faker
 
     @abstractmethod
-    def create_group(self) -> Group:
+    def run(self, students: list[Student]) -> Group:
         pass

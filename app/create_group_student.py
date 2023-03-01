@@ -1,16 +1,16 @@
-from entities import IFakerStudentData, IFakerGroupData, IGroupCreator, IStudentCreator, Student, Group
+from entities import IFakeStudentDataCreator, IFakeGroupDataCreator, IGroupCreator, IStudentCreator, Student, Group
 from random import choice, uniform
 
 from faker import Faker
 
 
-class FakeStudentData(IFakerStudentData):
+class FakeStudentData(IFakeStudentDataCreator):
     def __init__(self, faker: Faker):
         self.faker = faker
-        self.gender = choice(['М', 'Ж'])
+        self.gender = choice(["М", "Ж"])
 
     def get_fullname(self) -> str:
-        if self.gender == 'М':
+        if self.gender == "М":
             return self.faker.name_male()
         return self.faker.name_female()
 
@@ -30,7 +30,7 @@ class FakeStudentData(IFakerStudentData):
         return round(uniform(3, 5), 2)
 
 
-class FakeGroupDada(IFakerGroupData):
+class FakeGroupData(IFakeGroupDataCreator):
     def __init__(self, faker: Faker):
         self.faker = faker
 
@@ -39,19 +39,19 @@ class FakeGroupDada(IFakerGroupData):
 
 
 class StudentCreator(IStudentCreator):
-    def create_student(self) -> Student:
-        name = self.faker_student_data.get_fullname()
-        age = self.faker_student_data.get_age()
-        gender = self.faker_student_data.get_gender()
-        height = self.faker_student_data.get_height()
-        weight = self.faker_student_data.get_weight()
-        average_score = self.faker_student_data.get_average_score()
+    def run(self) -> Student:
+        name = self.faker.get_fullname()
+        age = self.faker.get_age()
+        gender = self.faker.get_gender()
+        height = self.faker.get_height()
+        weight = self.faker.get_weight()
+        average_score = self.faker.get_average_score()
 
         return Student(name, age, gender, weight, height, average_score)
 
 
 class GroupCreator(IGroupCreator):
-    def create_group(self) -> Group:
-        name = self.faker_group_data.get_name()
+    def run(self, students: list[Student]) -> Group:
+        name = self.faker.get_name()
 
-        return Group(name, self.students)
+        return Group(name, students=students)
