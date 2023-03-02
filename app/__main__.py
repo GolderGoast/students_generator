@@ -1,7 +1,6 @@
 import typer
 from config import GROUPS_COUNT, STUDENTS_IN_GROUP_COUNT, TYPE_REPORT
-from create_group_student import (FakeGroupData, FakeStudentData, Group,
-                                  GroupCreator, StudentCreator)
+from create_group_student import FakeGroupData, FakeStudentData, Group, GroupCreator, StudentCreator
 from faker import Faker
 from group_builder import GroupsBuilder
 from report_creator import IReportGetter, JsonReport, PDFReport, XLSXReport

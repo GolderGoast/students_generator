@@ -1,7 +1,6 @@
 from random import choice, uniform
 
-from entities import (Group, IFakeGroupDataCreator, IFakeStudentDataCreator,
-                      IGroupCreator, IStudentCreator, Student)
+from entities import Group, IFakeGroupDataCreator, IFakeStudentDataCreator, IGroupCreator, IStudentCreator, Student
 from faker import Faker
 
 
