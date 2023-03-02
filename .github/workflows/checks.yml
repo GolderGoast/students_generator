@@ -1,11 +1,11 @@
-name: Checks code
+name: Linters
 
 on:
   push:
     branches: [ master ]
 
 jobs:
-  build:
+  black:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,4 +23,24 @@ jobs:
         run: poetry install --no-root
 
       - name: Run black
-        run: poetry run black app
+        run: poetry run black --check app
+
+  isort:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install poetry
+        run: pipx install poetry
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'poetry'
+
+      - name: Install deps
+        run: poetry install --no-root
+
+      - name: Run isort
+        run: poetry run isort --check-only app

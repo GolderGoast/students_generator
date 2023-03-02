@@ -1,4 +1,4 @@
-from entities import IGroupCreator, IStudentCreator, Group
+from entities import Group, IGroupCreator, IStudentCreator
 
 
 class GroupsBuilder:
