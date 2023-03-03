@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from entities import Group
+from app.entities import Group
 
 
 class IReportGetter(ABC):

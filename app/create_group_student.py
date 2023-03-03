@@ -1,7 +1,8 @@
 from random import choice, uniform
 
-from entities import Group, IFakeGroupDataCreator, IFakeStudentDataCreator, IGroupCreator, IStudentCreator, Student
 from faker import Faker
+
+from app.entities import Group, IFakeGroupDataCreator, IFakeStudentDataCreator, IGroupCreator, IStudentCreator, Student
 
 
 class FakeStudentData(IFakeStudentDataCreator):
@@ -15,7 +16,7 @@ class FakeStudentData(IFakeStudentDataCreator):
         return self.faker.name_female()
 
     def get_age(self) -> int:
-        return self.faker.random_int(18, 26)
+        return self.faker.random_int(18, 25)
 
     def get_gender(self) -> str:
         return self.gender
