@@ -48,7 +48,7 @@ jobs:
           python-version: '3.10'
 
       - name: Install deps
-        run: pip install Flake8, Flake8-pyproject
+        run: pip install flake8, Flake8-pyproject
 
       - name: Run flake8
         run: flake8 app
