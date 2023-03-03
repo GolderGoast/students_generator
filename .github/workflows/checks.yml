@@ -11,19 +11,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install poetry
-        run: pipx install poetry
-
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-          cache: 'poetry'
 
       - name: Install deps
-        run: poetry install --no-root
+        run: pip install black
 
       - name: Run black
-        run: poetry run black --check app
+        run: python3 black --check app
 
   isort:
     runs-on: ubuntu-latest
@@ -31,19 +27,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install poetry
-        run: pipx install poetry
-
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-          cache: 'poetry'
 
       - name: Install deps
-        run: poetry install --no-root
+        run: pip install isort
 
       - name: Run isort
-        run: poetry run isort --check-only app
+        run: python3 isort --check-only app
 
   flake8:
     runs-on: ubuntu-latest
@@ -51,16 +43,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install poetry
-        run: pipx install poetry
-
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-          cache: 'poetry'
 
       - name: Install deps
-        run: poetry install --no-root
+        run: pip install Flake8, Flake8-pyproject
 
       - name: Run flake8
-        run: poetry run flake8 app
+        run: python3 flake8 app
