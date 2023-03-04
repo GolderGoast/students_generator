@@ -8,9 +8,11 @@ from app.entities import Group, IFakeGroupDataCreator, IFakeStudentDataCreator, 
 class FakeStudentData(IFakeStudentDataCreator):
     def __init__(self, faker: Faker):
         self.faker = faker
-        self.gender = choice(["М", "Ж"])
+        self.gender = "М"
 
     def get_fullname(self) -> str:
+        self.gender = choice(["М", "Ж"])
+
         if self.gender == "М":
             return self.faker.name_male()
         return self.faker.name_female()

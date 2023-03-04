@@ -5,7 +5,7 @@ on:
     branches: [ master ]
 
 jobs:
-  black:
+  linters:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,39 +16,13 @@ jobs:
           python-version: '3.10'
 
       - name: Install deps
-        run: pip install black
+        run: pip install black isort flake8 Flake8-pyproject
 
       - name: Run black
         run: black --check app
 
-  isort:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      - name: Install deps
-        run: pip install isort
-
       - name: Run isort
         run: isort --check-only app
-
-  flake8:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      - name: Install deps
-        run: pip install flake8 Flake8-pyproject
 
       - name: Run flake8
         run: flake8 app

@@ -1,8 +1,9 @@
 from dataclasses import dataclass
 
 from openpyxl import load_workbook
+import json
 
-from app.report_creator import XLSXReport
+from app.report_creator import XLSXReport, JsonReport
 
 
 @dataclass()
@@ -40,3 +41,65 @@ def test_xlsx_report(tmpdir):
     for sheet in wb.worksheets:
         for row in list(sheet)[1:]:
             assert [cell.value for cell in row] == ['John', 20, 'M', 90, 180, 3.5]
+
+
+test_json_data = {
+    'Группа MyGroup': {
+        'Студент John': {
+                "Возраст": 20,
+                "Пол": 'M',
+                "Вес": 90,
+                "Рост": 180,
+                "Средний балл": 3.5,
+        },
+        'Студент John1': {
+            "Возраст": 20,
+            "Пол": 'M',
+            "Вес": 90,
+            "Рост": 180,
+            "Средний балл": 3.5,
+        },
+        'Студент John2': {
+            "Возраст": 20,
+            "Пол": 'M',
+            "Вес": 90,
+            "Рост": 180,
+            "Средний балл": 3.5,
+        },
+    },
+    'Группа MyGroup1': {
+        'Студент John': {
+                "Возраст": 20,
+                "Пол": 'M',
+                "Вес": 90,
+                "Рост": 180,
+                "Средний балл": 3.5,
+        },
+        'Студент John1': {
+            "Возраст": 20,
+            "Пол": 'M',
+            "Вес": 90,
+            "Рост": 180,
+            "Средний балл": 3.5,
+        },
+        'Студент John2': {
+            "Возраст": 20,
+            "Пол": 'M',
+            "Вес": 90,
+            "Рост": 180,
+            "Средний балл": 3.5,
+        },
+    },
+}
+
+
+def test_json_report(tmpdir):
+    file_path = tmpdir.join('report')
+
+    getter = JsonReport(mock_groups, file_path)
+    getter.get_report()
+
+    with open(f'{file_path}.json', 'r') as file:
+        data = json.load(file)
+
+    assert data == test_json_data
