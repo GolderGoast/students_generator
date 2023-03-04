@@ -11,22 +11,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install poetry
-        run: pipx install poetry
-
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-          cache: 'poetry'
 
       - name: Install deps
-        run: poetry install --no-root
+        run: pip install black isort flake8 Flake8-pyproject
 
       - name: Run black
-        run: poetry run black --check app
+        run: black --check app
 
       - name: Run isort
-        run: poetry run isort --check-only app
+        run: isort --check-only app
 
       - name: Run flake8
-        run: poetry run flake8 app
+        run: flake8 app
