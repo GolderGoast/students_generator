@@ -45,17 +45,15 @@ class JsonReport(IReportGetter):
 
         report = {}
         for group in self.groups:
-
             if f"Группа {group.name}" in report:
-
                 for i in range(1, GROUPS_COUNT):
-                    group_name = f'{group.name}{i}'
+                    group_name = f"{group.name}{i}"
                     if f"Группа {group_name}" in report:
                         continue
                     break
 
             else:
-                group_name = f'{group.name}'
+                group_name = f"{group.name}"
 
             report[f"Группа {group_name}"] = {}
 
@@ -63,15 +61,14 @@ class JsonReport(IReportGetter):
                 student_data = list(vars(student).values())[1:]
 
                 if f"Студент {student.full_name}" in report[f"Группа {group_name}"]:
-
                     for i in range(1, STUDENTS_IN_GROUP_COUNT):
-                        student_name = f'{student.full_name}{i}'
+                        student_name = f"{student.full_name}{i}"
                         if f"Студент {student_name}" in report[f"Группа {group_name}"]:
                             continue
                         break
 
                 else:
-                    student_name = f'{student.full_name}'
+                    student_name = f"{student.full_name}"
 
                 report[f"Группа {group_name}"][f"Студент {student_name}"] = dict(
                     zip(
