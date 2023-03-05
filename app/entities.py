@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
 
-@dataclass()
+@dataclass
 class Student:
     full_name: str
     age: int
@@ -12,7 +12,7 @@ class Student:
     average_score: float
 
 
-@dataclass()
+@dataclass
 class Group:
     name: str
     students: list[Student]

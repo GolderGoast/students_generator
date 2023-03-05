@@ -1,12 +1,13 @@
+import json
 from dataclasses import dataclass
 
 from openpyxl import load_workbook
-import json
+from pdfminer.high_level import extract_text
 
-from app.report_creator import XLSXReport, JsonReport
+from app.report_creator import XLSXReport, JsonReport, PDFReport
 
 
-@dataclass()
+@dataclass
 class MockStudent:
     full_name: str = 'John'
     age: int = 20
@@ -16,15 +17,15 @@ class MockStudent:
     average_score: float = 3.5
 
 
-@dataclass()
+@dataclass
 class MockGroup:
     students: list[MockStudent]
     name: str = 'MyGroup'
 
 
 mock_groups = [
-               MockGroup([MockStudent(), MockStudent(), MockStudent()]),
-               MockGroup([MockStudent(), MockStudent(), MockStudent()])
+    MockGroup([MockStudent(), MockStudent(), MockStudent()]),
+    MockGroup([MockStudent(), MockStudent(), MockStudent()])
 ]
 
 
@@ -46,11 +47,11 @@ def test_xlsx_report(tmpdir):
 test_json_data = {
     'Группа MyGroup': {
         'Студент John': {
-                "Возраст": 20,
-                "Пол": 'M',
-                "Вес": 90,
-                "Рост": 180,
-                "Средний балл": 3.5,
+            "Возраст": 20,
+            "Пол": 'M',
+            "Вес": 90,
+            "Рост": 180,
+            "Средний балл": 3.5,
         },
         'Студент John1': {
             "Возраст": 20,
@@ -69,11 +70,11 @@ test_json_data = {
     },
     'Группа MyGroup1': {
         'Студент John': {
-                "Возраст": 20,
-                "Пол": 'M',
-                "Вес": 90,
-                "Рост": 180,
-                "Средний балл": 3.5,
+            "Возраст": 20,
+            "Пол": 'M',
+            "Вес": 90,
+            "Рост": 180,
+            "Средний балл": 3.5,
         },
         'Студент John1': {
             "Возраст": 20,
@@ -103,3 +104,25 @@ def test_json_report(tmpdir):
         data = json.load(file)
 
     assert data == test_json_data
+
+
+test_pdf_data = ['Группа MyGroup',
+                 '- John - Возраст: 20, Пол: M, Рост: 180, Вес: 90, Средний балл: 3.5',
+                 '- John - Возраст: 20, Пол: M, Рост: 180, Вес: 90, Средний балл: 3.5',
+                 '- John - Возраст: 20, Пол: M, Рост: 180, Вес: 90, Средний балл: 3.5',
+                 'Группа MyGroup',
+                 '- John - Возраст: 20, Пол: M, Рост: 180, Вес: 90, Средний балл: 3.5',
+                 '- John - Возраст: 20, Пол: M, Рост: 180, Вес: 90, Средний балл: 3.5',
+                 '- John - Возраст: 20, Пол: M, Рост: 180, Вес: 90, Средний балл: 3.5']
+
+
+def test_pdf_report(tmpdir):
+    file_path = tmpdir.join('report')
+
+    getter = PDFReport(mock_groups, file_path)
+    getter.get_report()
+
+    report_data = extract_text(f'{file_path}.pdf').strip().split('\n')
+    report_data = [i.strip() for i in report_data if i]
+
+    assert report_data == test_pdf_data
