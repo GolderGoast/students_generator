@@ -1,6 +1,7 @@
 <h1>Скрипт для получения отчета по группам и студентам университета в форматах xlsx, pdf и json.</h1>
 
 ![Build status](https://github.com/GolderGoast/get_report_about_groups_and_students_in_university/actions/workflows/linters.yml/badge.svg?branch=master)
+![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/GolderGoast/6142fbd47742665fa2e00b989f7f6935/raw/my_coverage.json)
 
 <h3>При запуске скрипта отредактировать файл [config.py](app/config.py):</h3>
 

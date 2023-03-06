@@ -25,7 +25,24 @@ jobs:
         run: poetry run pytest
 
       - name: Coverage
-        run: poetry run pytest --cov app
+        run: poetry run coverage json
 
-      - name: Coverage Badge
-        uses: tj-repositories/coverage-badge-py@v1.8
+      - name: Install jq
+        run: sudo apt install jq
+
+      - name: Get percent coverage
+        run: |
+          poetry run coverage json
+          echo TOTAL=$(cat coverage.json | jq .totals | jq .percent_covered) >> $GITHUB_ENV
+
+      - name: Create coverage badge
+        uses: schneegans/dynamic-badges-action@v1.6.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: 6142fbd47742665fa2e00b989f7f6935
+          filename: my_coverage.json
+          label: Coverage
+          message: ${{ env.TOTAL }}
+          valColorRange: ${{ env.TOTAL }}
+          maxColorRange: 100
+          minColorRange: 0
