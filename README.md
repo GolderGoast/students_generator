@@ -1,6 +1,7 @@
 <h1>Скрипт для получения отчета по группам и студентам университета в форматах xlsx, pdf и json.</h1>
 
 ![Build status](https://github.com/GolderGoast/get_report_about_groups_and_students_in_university/actions/workflows/linters.yml/badge.svg?branch=master)
+![AppVeyor tests](https://img.shields.io/appveyor/tests/GolderGoast/get_report_about_groups_and_students_in_university)
 
 <h3>При запуске скрипта отредактировать файл [config.py](app/config.py):</h3>
 
