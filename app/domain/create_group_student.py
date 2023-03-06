@@ -2,7 +2,14 @@ from random import choice, uniform
 
 from faker import Faker
 
-from app.entities import Group, IFakeGroupDataCreator, IFakeStudentDataCreator, IGroupCreator, IStudentCreator, Student
+from app.domain.entities import (
+    Group,
+    IFakeGroupDataCreator,
+    IFakeStudentDataCreator,
+    IGroupCreator,
+    IStudentCreator,
+    Student,
+)
 
 
 class FakeStudentData(IFakeStudentDataCreator):

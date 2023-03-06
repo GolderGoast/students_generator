@@ -2,7 +2,7 @@ from random import randint
 
 import pytest
 
-from app.create_group_student import FakeStudentData, FakeGroupData
+from app.domain.create_group_student import FakeStudentData, FakeGroupData
 
 
 @pytest.fixture()

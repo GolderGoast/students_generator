@@ -1,6 +1,6 @@
-from app.create_group_student import StudentCreator, GroupCreator
-from app.entities import Group
-from app.group_builder import GroupsBuilder
+from app.domain.create_group_student import StudentCreator, GroupCreator
+from app.domain.entities import Group
+from app.domain.group_builder import GroupsBuilder
 
 
 def test_build_groups_type(s_data, g_data):

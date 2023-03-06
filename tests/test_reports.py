@@ -4,7 +4,9 @@ from dataclasses import dataclass
 from openpyxl import load_workbook
 from pdfminer.high_level import extract_text
 
-from app.report_creator import XLSXReport, JsonReport, PDFReport
+from app.repositories.reports.json_report import JsonReport
+from app.repositories.reports.pdf_report import PDFReport
+from app.repositories.reports.xlsx_report import XLSXReport
 
 
 @dataclass

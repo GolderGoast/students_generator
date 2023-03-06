@@ -1,9 +1,13 @@
 import typer
 from config import GROUPS_COUNT, STUDENTS_IN_GROUP_COUNT, TYPE_REPORT
-from create_group_student import FakeGroupData, FakeStudentData, Group, GroupCreator, StudentCreator
 from faker import Faker
-from group_builder import GroupsBuilder
-from report_creator import IReportGetter, JsonReport, PDFReport, XLSXReport
+
+from app.domain.create_group_student import FakeGroupData, FakeStudentData, Group, GroupCreator, StudentCreator
+from app.domain.group_builder import GroupsBuilder
+from app.domain.report_creator import IReportGetter
+from app.repositories.reports.json_report import JsonReport
+from app.repositories.reports.pdf_report import PDFReport
+from app.repositories.reports.xlsx_report import XLSXReport
 
 REPORT_TYPES = {"xlsx": XLSXReport, "json": JsonReport, "pdf": PDFReport}
 
