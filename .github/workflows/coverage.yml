@@ -29,9 +29,11 @@ jobs:
 
       - name: Get percent coverage
         run: |
-          poetry run pytest --cov
+          poetry run pytest --cov app
           poetry run coverage json
-          echo TOTAL=$(cat coverage.json | jq .totals | jq .percent_covered) >> $GITHUB_ENV
+          TOTAL=$(cat coverage.json | jq .totals | jq .percent_covered)
+          TOTAL=$(echo "$TOTAL*10" | bc)
+          echo TOTAL=$(echo "scale=0; $TOTAL/10" | bc) >> $GITHUB_ENV
 
       - name: Create coverage badge
         uses: schneegans/dynamic-badges-action@v1.6.0
@@ -40,7 +42,7 @@ jobs:
           gistID: 6142fbd47742665fa2e00b989f7f6935
           filename: my_coverage.json
           label: Coverage
-          message: ${{ env.TOTAL }}
+          message: ${{ env.TOTAL }}%
           valColorRange: ${{ env.TOTAL }}
           maxColorRange: 100
           minColorRange: 0
