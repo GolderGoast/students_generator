@@ -1,6 +1,6 @@
 import json
+import os
 
-from app.config import GROUPS_COUNT, STUDENTS_IN_GROUP_COUNT
 from app.domain.report_creator import IReportGetter
 
 
@@ -22,7 +22,7 @@ class JsonReport(IReportGetter):
         report = {}
         for group in self.groups:
             group_name = self.__add_num_if_key_in_dict(
-                key=group.name, user_dict=report, prefix="Группа", count=GROUPS_COUNT
+                key=group.name, user_dict=report, prefix="Группа", count=int(os.getenv("GROUPS_COUNT"))
             )
 
             report[group_name] = {}
@@ -30,7 +30,10 @@ class JsonReport(IReportGetter):
                 student_data = list(vars(student).values())[1:]
 
                 student_name = self.__add_num_if_key_in_dict(
-                    key=student.full_name, user_dict=report[group_name], prefix="Студент", count=STUDENTS_IN_GROUP_COUNT
+                    key=student.full_name,
+                    user_dict=report[group_name],
+                    prefix="Студент",
+                    count=int(os.getenv("STUDENTS_IN_GROUP_COUNT")),
                 )
 
                 report[group_name][student_name] = dict(
