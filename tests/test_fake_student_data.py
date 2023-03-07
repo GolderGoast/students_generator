@@ -1,5 +1,6 @@
 import app
 from app.domain.create_group_student import StudentCreator, GroupCreator
+from app.domain.create_subject_time_table import TimeTableCreator
 from app.domain.entities import Student, Group, Gender
 
 
@@ -56,5 +57,6 @@ def test_student_creator(s_data):
 
 def test_group_creator(g_data, s_data):
     student = StudentCreator(s_data).run()
-    group = GroupCreator(g_data).run([student])
+    timetable = TimeTableCreator().run(names=('Math', ), times=('07:00', ), week=('Mon', ))
+    group = GroupCreator(g_data).run([student], timetable)
     assert isinstance(group, Group)
