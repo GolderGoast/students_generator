@@ -8,6 +8,8 @@ from app.repositories.reports.json_report import JsonReport
 from app.repositories.reports.pdf_report import PDFReport
 from app.repositories.reports.xlsx_report import XLSXReport
 
+import app
+
 
 @dataclass
 class MockStudent:
@@ -96,8 +98,11 @@ test_json_data = {
 }
 
 
-def test_json_report(tmpdir):
+def test_json_report(tmpdir, monkeypatch):
     file_path = tmpdir.join('report')
+
+    monkeypatch.setattr(app.repositories.reports.json_report, 'GROUPS_COUNT', 2)
+    monkeypatch.setattr(app.repositories.reports.json_report, 'STUDENTS_IN_GROUP_COUNT', 3)
 
     getter = JsonReport(mock_groups, file_path)
     getter.get_report()

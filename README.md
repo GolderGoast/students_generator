@@ -3,7 +3,7 @@
 ![Build status](https://github.com/GolderGoast/get_report_about_groups_and_students_in_university/actions/workflows/linters.yml/badge.svg?branch=master)
 ![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/GolderGoast/6142fbd47742665fa2e00b989f7f6935/raw/my_coverage.json)
 
-<h3>При запуске скрипта отредактировать файл [.env.develop](.env.develop):</h3>
+<h3>При запуске скрипта отредактировать файл .env.develop</h3>
 
 GROUPS_COUNT - количество групп в университете;  
 STUDENTS_IN_GROUP_COUNT - количество студентов в каждой группе;  
