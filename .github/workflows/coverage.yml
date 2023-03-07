@@ -32,6 +32,7 @@ jobs:
 
       - name: Get percent coverage
         run: |
+          poetry run pytest --cov
           poetry run coverage json
           echo TOTAL=$(cat coverage.json | jq .totals | jq .percent_covered) >> $GITHUB_ENV
 
