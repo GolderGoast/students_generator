@@ -39,6 +39,48 @@ class Group:
     timetable: TimeTable
 
 
+class IAdministrator(ABC):
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+    @abstractmethod
+    def add_group(self):
+        pass
+
+    @abstractmethod
+    def del_group(self):
+        pass
+
+    @abstractmethod
+    def rename_group(self):
+        pass
+
+    @abstractmethod
+    def add_student(self):
+        pass
+
+    @abstractmethod
+    def del_student(self):
+        pass
+
+    @abstractmethod
+    def rename_student(self):
+        pass
+
+    @abstractmethod
+    def add_timetable(self):
+        pass
+
+    @abstractmethod
+    def del_timetable(self):
+        pass
+
+    @abstractmethod
+    def change_timetable(self):
+        pass
+
+
 class IFakeStudentDataCreator(ABC):
     @abstractmethod
     def get_fullname(self) -> str:
