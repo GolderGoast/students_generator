@@ -3,6 +3,7 @@ from config import GROUPS_COUNT, STUDENTS_IN_GROUP_COUNT, TYPE_REPORT
 from faker import Faker
 
 from app.domain.create_group_student import FakeGroupData, FakeStudentData, Group, GroupCreator, StudentCreator
+from app.domain.create_subject_time_table import TimeTableCreator
 from app.domain.group_builder import GroupsBuilder
 from app.domain.report_creator import IReportGetter
 from app.repositories.reports.json_report import JsonReport
@@ -21,9 +22,14 @@ def main(gc: int = GROUPS_COUNT, sc: int = STUDENTS_IN_GROUP_COUNT, rtype: str =
 
     group_creator = GroupCreator(faker=fake_group_data)
     student_creator = StudentCreator(faker=fake_student_data)
+    timetable_creator = TimeTableCreator()
 
     builder = GroupsBuilder(
-        group_creator=group_creator, student_creator=student_creator, groups_count=gc, students_count=sc
+        group_creator=group_creator,
+        student_creator=student_creator,
+        groups_count=gc,
+        students_count=sc,
+        timetable_creator=timetable_creator,
     )
     groups: list[Group] = builder.run()
 

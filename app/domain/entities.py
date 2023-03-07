@@ -12,16 +12,31 @@ class Gender(Enum):
 class Student:
     full_name: str
     age: int
-    gender: Gender
+    gender: str
     weight: int
     height: int
     average_score: float
 
 
 @dataclass
+class Subject:
+    name: str
+    day_of_week: str
+    time: str
+
+
+@dataclass
+class TimeTable:
+    subjects: list[Subject]
+    week: tuple[str, ...]
+    times: tuple[str, ...]
+
+
+@dataclass
 class Group:
     name: str
     students: list[Student]
+    timetable: TimeTable
 
 
 class IFakeStudentDataCreator(ABC):
@@ -70,5 +85,37 @@ class IGroupCreator(ABC):
         self.faker = faker
 
     @abstractmethod
-    def run(self, students: list[Student]) -> Group:
+    def run(self, students: list[Student], timetable: TimeTable) -> Group:
+        pass
+
+
+class ISubjectDataCreator(ABC):
+    @abstractmethod
+    def get_name(self):
+        pass
+
+    @abstractmethod
+    def get_day(self):
+        pass
+
+    @abstractmethod
+    def get_time(self):
+        pass
+
+
+class ISubjectCreator(ABC):
+    def __init__(self, subj_data: ISubjectDataCreator):
+        self.subj_data = subj_data
+
+    @abstractmethod
+    def run(self) -> Subject:
+        pass
+
+
+class ITimeTableCreator(ABC):
+    def __init__(self):
+        self.subjects: list[Subject] = []
+
+    @abstractmethod
+    def run(self, week: tuple[str, ...], times: tuple[str, ...], names: tuple[str, ...]) -> TimeTable:
         pass

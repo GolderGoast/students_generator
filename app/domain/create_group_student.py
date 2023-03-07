@@ -10,6 +10,7 @@ from app.domain.entities import (
     IGroupCreator,
     IStudentCreator,
     Student,
+    TimeTable,
 )
 
 
@@ -64,7 +65,7 @@ class StudentCreator(IStudentCreator):
 
 
 class GroupCreator(IGroupCreator):
-    def run(self, students: list[Student]) -> Group:
+    def run(self, students: list[Student], timetable: TimeTable) -> Group:
         name = self.faker.get_name()
 
-        return Group(name, students=students)
+        return Group(name, students=students, timetable=timetable)
