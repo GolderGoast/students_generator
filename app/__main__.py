@@ -5,9 +5,9 @@ from faker import Faker
 from app.domain.create_group_student import FakeGroupData, FakeStudentData, Group, GroupCreator, StudentCreator
 from app.domain.group_builder import GroupsBuilder
 from app.domain.report_creator import IReportGetter
-from app.repos.reports.json_report import JsonReport
-from app.repos.reports.pdf_report import PDFReport
-from app.repos.reports.xlsx_report import XLSXReport
+from app.repositories.reports.json_report import JsonReport
+from app.repositories.reports.pdf_report import PDFReport
+from app.repositories.reports.xlsx_report import XLSXReport
 
 REPORT_TYPES = {"xlsx": XLSXReport, "json": JsonReport, "pdf": PDFReport}
 
