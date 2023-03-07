@@ -3,6 +3,7 @@ from random import choice, uniform
 from faker import Faker
 
 from app.domain.entities import (
+    Gender,
     Group,
     IFakeGroupDataCreator,
     IFakeStudentDataCreator,
@@ -15,12 +16,12 @@ from app.domain.entities import (
 class FakeStudentData(IFakeStudentDataCreator):
     def __init__(self, faker: Faker):
         self.faker = faker
-        self.gender = "М"
+        self.gender = Gender.MALE
 
     def get_fullname(self) -> str:
-        self.gender = choice(["М", "Ж"])
+        self.gender = choice(list(Gender))
 
-        if self.gender == "М":
+        if self.gender == Gender.MALE:
             return self.faker.name_male()
         return self.faker.name_female()
 
@@ -28,7 +29,9 @@ class FakeStudentData(IFakeStudentDataCreator):
         return self.faker.random_int(18, 25)
 
     def get_gender(self) -> str:
-        return self.gender
+        if self.gender == Gender.MALE:
+            return "М"
+        return "Ж"
 
     def get_height(self) -> int:
         return self.faker.random_int(150, 210)

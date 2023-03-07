@@ -1,11 +1,11 @@
 import app
 from app.domain.create_group_student import StudentCreator, GroupCreator
-from app.domain.entities import Student, Group
+from app.domain.entities import Student, Group, Gender
 
 
 def test_get_full_name_male(s_data, monkeypatch):
     def mock_male_gender(*args, **kwargs):
-        return 'М'
+        return Gender.MALE
 
     monkeypatch.setattr(app.domain.create_group_student, "choice", mock_male_gender)
     assert s_data.get_fullname() == 'John'
@@ -13,7 +13,7 @@ def test_get_full_name_male(s_data, monkeypatch):
 
 def test_get_full_name_female(s_data, monkeypatch):
     def mock_female_gender(*args, **kwargs):
-        return 'Ж'
+        return Gender.FEMALE
 
     monkeypatch.setattr(app.domain.create_group_student, "choice", mock_female_gender)
     assert s_data.get_fullname() == 'Anna'
@@ -36,12 +36,12 @@ def test_get_average_score(s_data):
 
 
 def test_get_gender_male(s_data):
-    s_data.gender = 'М'
+    s_data.gender = Gender.MALE
     assert s_data.get_gender() == 'М'
 
 
 def test_get_gender_female(s_data):
-    s_data.gender = 'Ж'
+    s_data.gender = Gender.FEMALE
     assert s_data.get_gender() == 'Ж'
 
 

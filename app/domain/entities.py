@@ -1,12 +1,18 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from enum import Enum
+
+
+class Gender(Enum):
+    MALE = 0
+    FEMALE = 1
 
 
 @dataclass
 class Student:
     full_name: str
     age: int
-    gender: str
+    gender: Gender
     weight: int
     height: int
     average_score: float
