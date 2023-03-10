@@ -34,6 +34,9 @@ class SubjectCreator(ISubjectCreator):
 
 class TimeTableCreator(ITimeTableCreator):
     def run(self, week: tuple[str, ...], times: tuple[str, ...], names: tuple[str, ...]) -> TimeTable:
+        if self.subjects:
+            self.subjects = []
+
         for day in week:
             for time in times:
                 if day in ["Сб", "Вс"]:
