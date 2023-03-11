@@ -3,7 +3,13 @@ from dataclasses import dataclass
 
 from openpyxl import load_workbook
 from pdfminer.high_level import extract_text
+from sqlalchemy import and_
 
+from app.repositories.reports.db_report.db_report import DataBaseReport
+from app.repositories.reports.db_report.groups import DBGroup
+from app.repositories.reports.db_report.students import DBStudent
+from app.repositories.reports.db_report.subjects import DBSubject
+from app.repositories.reports.db_report.timetables import DBTimeTable
 from app.repositories.reports.json_report import JsonReport
 from app.repositories.reports.pdf_report import PDFReport
 from app.repositories.reports.xlsx_report import XLSXReport
@@ -20,14 +26,32 @@ class MockStudent:
 
 
 @dataclass
+class MockSubject:
+    name: str = 'Math'
+    day_of_week: str = 'Mon'
+    time: str = '07:00'
+
+
+@dataclass
+class MockTimeTable:
+    subjects: list[MockSubject]
+    week: tuple[str, ...]
+    times: tuple[str, ...]
+
+
+@dataclass
 class MockGroup:
     students: list[MockStudent]
+    timetable: MockTimeTable
     name: str = 'MyGroup'
 
 
+mock_timetable = MockTimeTable([MockSubject(), MockSubject(), MockSubject()],
+                               ('Mon',), ('07:00',))
+
 mock_groups = [
-    MockGroup([MockStudent(), MockStudent(), MockStudent()]),
-    MockGroup([MockStudent(), MockStudent(), MockStudent()])
+    MockGroup([MockStudent(), MockStudent(), MockStudent()], mock_timetable),
+    MockGroup([MockStudent(), MockStudent(), MockStudent()], mock_timetable)
 ]
 
 
@@ -131,3 +155,20 @@ def test_pdf_report(tmpdir):
     report_data = [i.strip() for i in report_data if i]
 
     assert report_data == test_pdf_data
+
+
+def test_db_report(tmpdir):
+    file_path = tmpdir.join('report')
+
+    getter = DataBaseReport(mock_groups, file_path)
+    getter.get_report()
+
+    session = getter.session
+    groups_name = [i[0] for i in session.query(DBGroup.name)]
+    students_name = [i[0] for i in session.query(DBStudent.full_name).where(DBStudent.group == 1)]
+    groups_subj = [i[0] for i in
+                   session.query(DBSubject.name).where(and_(DBSubject.timetable == 1, DBTimeTable.group == 1))]
+
+    assert groups_name == ['MyGroup', 'MyGroup']
+    assert students_name == ['John', 'John', 'John']
+    assert groups_subj == ['Math', 'Math', 'Math']
