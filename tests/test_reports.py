@@ -3,7 +3,6 @@ from dataclasses import dataclass
 
 from openpyxl import load_workbook
 from pdfminer.high_level import extract_text
-from sqlalchemy import and_
 
 from app.repositories.reports.db_report.db_report import DataBaseReport
 from app.repositories.reports.db_report.groups import DBGroup
@@ -49,9 +48,12 @@ class MockGroup:
 mock_timetable = MockTimeTable([MockSubject(), MockSubject(), MockSubject()],
                                ('Mon',), ('07:00',))
 
+mock_timetable2 = MockTimeTable([MockSubject('Info'), MockSubject(name='Info'), MockSubject('Info')],
+                                ('Mon',), ('07:00',))
+
 mock_groups = [
     MockGroup([MockStudent(), MockStudent(), MockStudent()], mock_timetable),
-    MockGroup([MockStudent(), MockStudent(), MockStudent()], mock_timetable)
+    MockGroup([MockStudent(), MockStudent(), MockStudent()], mock_timetable2)
 ]
 
 
@@ -165,10 +167,11 @@ def test_db_report(tmpdir):
 
     session = getter.session
     groups_name = [i[0] for i in session.query(DBGroup.name)]
-    students_name = [i[0] for i in session.query(DBStudent.full_name).where(DBStudent.group == 1)]
-    groups_subj = [i[0] for i in
-                   session.query(DBSubject.name).where(and_(DBSubject.timetable == 1, DBTimeTable.group == 1))]
+    students_name = [i[0] for i in session.query(DBStudent.full_name).join(DBGroup).filter(DBGroup.id == 1)]
+    groups_subj = [i[0] for i in session.query(DBSubject.name).join(DBTimeTable).join(DBGroup).filter(DBGroup.id == 1)]
+    groups_subj2 = [i[0] for i in session.query(DBSubject.name).join(DBTimeTable).join(DBGroup).filter(DBGroup.id == 2)]
 
     assert groups_name == ['MyGroup', 'MyGroup']
     assert students_name == ['John', 'John', 'John']
     assert groups_subj == ['Math', 'Math', 'Math']
+    assert groups_subj2 == ['Info', 'Info', 'Info']
