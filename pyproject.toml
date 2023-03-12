@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "get-report-about-groups-and-students-in-university"
+name = "students_generator"
 version = "0.1.0"
 description = ""
 authors = ["andrey <andrey28059999@gmail.com>"]
 readme = "README.md"
-packages = [{include = "get_report_about_groups_and_students_in_university"}]
+packages = [{include = "students_generator"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"

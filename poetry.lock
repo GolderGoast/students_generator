@@ -2,14 +2,14 @@
 
 [[package]]
 name = "argcomplete"
-version = "2.0.5"
+version = "2.0.6"
 description = "Bash tab completion for argparse"
 category = "dev"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "argcomplete-2.0.5-py3-none-any.whl", hash = "sha256:e2a2cdb8ee9634ff2fa368ba6b996b46205341e0cf106be8075fd9bdbc5cf2e7"},
-    {file = "argcomplete-2.0.5.tar.gz", hash = "sha256:1cfd12928d62e41901783e4dc7d7ca03eccd589840face4c020693b13f754312"},
+    {file = "argcomplete-2.0.6-py3-none-any.whl", hash = "sha256:6c2170b3e0ab54683cb28d319b65261bde1f11388be688b68118b7d281e34c94"},
+    {file = "argcomplete-2.0.6.tar.gz", hash = "sha256:dc33528d96727882b576b24bc89ed038f3c6abbb6855ff9bb6be23384afff9d6"},
 ]
 
 [package.extras]
@@ -421,14 +421,14 @@ test = ["pytest (>=6)"]
 
 [[package]]
 name = "faker"
-version = "17.5.0"
+version = "17.6.0"
 description = "Faker is a Python package that generates fake data for you."
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "Faker-17.5.0-py3-none-any.whl", hash = "sha256:facf66ed0faa2088da2ec90f770d3df01af7fd15dc4924eca6da4cd45ed09eb2"},
-    {file = "Faker-17.5.0.tar.gz", hash = "sha256:d43b2c5af9157f2ef04b09b2d01d3092607f094b2328e5f6a2ee1d7ba760db64"},
+    {file = "Faker-17.6.0-py3-none-any.whl", hash = "sha256:5aaa16fa9cfde7d117eef70b6b293a705021e57158f3fa6b44ed1b70202d2065"},
+    {file = "Faker-17.6.0.tar.gz", hash = "sha256:51f37ff9df710159d6d736d0ba1c75e063430a8c806b91334d7794305b5a6114"},
 ]
 
 [package.dependencies]
@@ -572,14 +572,14 @@ test = ["objgraph", "psutil"]
 
 [[package]]
 name = "identify"
-version = "2.5.18"
+version = "2.5.20"
 description = "File identification library for Python"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "identify-2.5.18-py2.py3-none-any.whl", hash = "sha256:93aac7ecf2f6abf879b8f29a8002d3c6de7086b8c28d88e1ad15045a15ab63f9"},
-    {file = "identify-2.5.18.tar.gz", hash = "sha256:89e144fa560cc4cffb6ef2ab5e9fb18ed9f9b3cb054384bab4b95c12f6c309fe"},
+    {file = "identify-2.5.20-py2.py3-none-any.whl", hash = "sha256:5dfef8a745ca4f2c95f27e9db74cb4c8b6d9916383988e8791f3595868f78a33"},
+    {file = "identify-2.5.20.tar.gz", hash = "sha256:c8b288552bc5f05a08aff09af2f58e6976bf8ac87beb38498a0e3d98ba64eb18"},
 ]
 
 [package.extras]
@@ -734,14 +734,14 @@ setuptools = "*"
 
 [[package]]
 name = "openpyxl"
-version = "3.1.1"
+version = "3.1.2"
 description = "A Python library to read/write Excel 2010 xlsx/xlsm files"
 category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "openpyxl-3.1.1-py2.py3-none-any.whl", hash = "sha256:a0266e033e65f33ee697254b66116a5793c15fc92daf64711080000df4cfe0a8"},
-    {file = "openpyxl-3.1.1.tar.gz", hash = "sha256:f06d44e2c973781068bce5ecf860a09bcdb1c7f5ce1facd5e9aa82c92c93ae72"},
+    {file = "openpyxl-3.1.2-py2.py3-none-any.whl", hash = "sha256:f91456ead12ab3c6c2e9491cf33ba6d08357d802192379bb482f1033ade496f5"},
+    {file = "openpyxl-3.1.2.tar.gz", hash = "sha256:a6f5977418eff3b2d5500d54d9db50c8277a368436f4e4f8ddb1be3422870184"},
 ]
 
 [package.dependencies]
@@ -794,14 +794,14 @@ image = ["Pillow"]
 
 [[package]]
 name = "platformdirs"
-version = "3.0.0"
+version = "3.1.1"
 description = "A small Python package for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "platformdirs-3.0.0-py3-none-any.whl", hash = "sha256:b1d5eb14f221506f50d6604a561f4c5786d9e80355219694a1b244bcd96f4567"},
-    {file = "platformdirs-3.0.0.tar.gz", hash = "sha256:8a1228abb1ef82d788f74139988b137e78692984ec7b08eaa6c65f1723af28f9"},
+    {file = "platformdirs-3.1.1-py3-none-any.whl", hash = "sha256:e5986afb596e4bb5bde29a79ac9061aa955b94fca2399b7aaac4090860920dd8"},
+    {file = "platformdirs-3.1.1.tar.gz", hash = "sha256:024996549ee88ec1a9aa99ff7f8fc819bb59e2c3477b410d90a16d32d6e707aa"},
 ]
 
 [package.extras]
@@ -1071,14 +1071,14 @@ jupyter = ["ipywidgets (>=7.5.1,<8.0.0)"]
 
 [[package]]
 name = "setuptools"
-version = "67.4.0"
+version = "67.6.0"
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "setuptools-67.4.0-py3-none-any.whl", hash = "sha256:f106dee1b506dee5102cc3f3e9e68137bbad6d47b616be7991714b0c62204251"},
-    {file = "setuptools-67.4.0.tar.gz", hash = "sha256:e5fd0a713141a4a105412233c63dc4e17ba0090c8e8334594ac790ec97792330"},
+    {file = "setuptools-67.6.0-py3-none-any.whl", hash = "sha256:b78aaa36f6b90a074c1fa651168723acbf45d14cb1196b6f02c0fd07f17623b2"},
+    {file = "setuptools-67.6.0.tar.gz", hash = "sha256:2ee892cd5f29f3373097f5a814697e397cf3ce313616df0af11231e2ad118077"},
 ]
 
 [package.extras]
