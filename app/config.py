@@ -1,9 +1,17 @@
-import os
+from pydantic import BaseSettings
 
-from dotenv import find_dotenv, load_dotenv
 
-load_dotenv(find_dotenv())
+class Settings(BaseSettings):
+    groups_count: int
+    students_in_group_count: int
+    type_report: str
 
-GROUPS_COUNT = int(os.getenv("GROUPS_COUNT"))
-STUDENTS_IN_GROUP_COUNT = int(os.getenv("STUDENTS_IN_GROUP_COUNT"))
-TYPE_REPORT = os.getenv("TYPE_REPORT")
+    class Config:
+        env_file = "../.env"
+
+
+settings = Settings()
+
+GROUPS_COUNT = settings.groups_count
+STUDENTS_IN_GROUP_COUNT = settings.students_in_group_count
+TYPE_REPORT = settings.type_report
