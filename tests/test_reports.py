@@ -5,10 +5,10 @@ from openpyxl import load_workbook
 from pdfminer.high_level import extract_text
 
 from app.repositories.reports.db_report import DataBaseReport
-from app.data.models.groups import DBGroup
-from app.data.models.students import DBStudent
-from app.data.models.subjects import DBSubject
-from app.data.models.timetables import DBTimeTable
+from app.data.models.groups import Group
+from app.data.models.students import Student
+from app.data.models.subjects import Subject
+from app.data.models.timetables import TimeTable
 from app.repositories.reports.json_report import JsonReport
 from app.repositories.reports.pdf_report import PDFReport
 from app.repositories.reports.xlsx_report import XLSXReport
@@ -163,10 +163,10 @@ def test_db_report(tmpdir):
     getter.get_report()
 
     session = getter.session
-    groups_name = [i[0] for i in session.query(DBGroup.name)]
-    students_name = [i[0] for i in session.query(DBStudent.full_name).join(DBGroup).filter(DBGroup.id == 1)]
-    groups_subj = [i[0] for i in session.query(DBSubject.name).join(DBTimeTable).join(DBGroup).filter(DBGroup.id == 1)]
-    groups_subj2 = [i[0] for i in session.query(DBSubject.name).join(DBTimeTable).join(DBGroup).filter(DBGroup.id == 2)]
+    groups_name = [i[0] for i in session.query(Group.name)]
+    students_name = [i[0] for i in session.query(Student.full_name).join(Group).filter(Group.id == 1)]
+    groups_subj = [i[0] for i in session.query(Subject.name).join(TimeTable).join(Group).filter(Group.id == 1)]
+    groups_subj2 = [i[0] for i in session.query(Subject.name).join(TimeTable).join(Group).filter(Group.id == 2)]
 
     assert groups_name == ['MyGroup', 'MyGroup']
     assert students_name == ['John', 'John', 'John']

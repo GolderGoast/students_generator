@@ -4,8 +4,8 @@ from sqlalchemy.orm import Mapped, mapped_column
 from app.data.models.base_class import Base
 
 
-class DBStudent(Base):
-    __tablename__ = "student"
+class Student(Base):
+    __tablename__ = "students"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     full_name: Mapped[str] = mapped_column(String(50))
@@ -14,7 +14,7 @@ class DBStudent(Base):
     weight: Mapped[int]
     height: Mapped[int]
     average_score: Mapped[float]
-    group: Mapped[int] = mapped_column(Integer, ForeignKey("group.id"))
+    group: Mapped[int] = mapped_column(Integer, ForeignKey("groups.id"))
 
     def __repr__(self):
         return (
