@@ -122,11 +122,8 @@ test_json_data = {
 }
 
 
-def test_json_report(tmpdir, monkeypatch):
+def test_json_report(tmpdir):
     file_path = tmpdir.join('report')
-
-    monkeypatch.setenv("GROUPS_COUNT", '2')
-    monkeypatch.setenv('STUDENTS_IN_GROUP_COUNT', '3')
 
     getter = JsonReport(mock_groups, file_path)
     getter.get_report()
