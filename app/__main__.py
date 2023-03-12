@@ -1,5 +1,5 @@
 import typer
-from config import GROUPS_COUNT, STUDENTS_IN_GROUP_COUNT, TYPE_REPORT
+from app.config import GROUPS_COUNT, STUDENTS_IN_GROUP_COUNT, TYPE_REPORT
 from faker import Faker
 
 from app.domain.create_group_student import FakeGroupData, FakeStudentData, Group, GroupCreator, StudentCreator
