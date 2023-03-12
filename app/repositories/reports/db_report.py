@@ -3,13 +3,13 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+from app.data.models.base_class import Base
+from app.data.models.groups import DBGroup
+from app.data.models.students import DBStudent
+from app.data.models.subjects import DBSubject
+from app.data.models.timetables import DBTimeTable
 from app.domain.entities import Group
 from app.domain.report_creator import IReportGetter
-from app.repositories.reports.db_report.base_class import Base
-from app.repositories.reports.db_report.groups import DBGroup
-from app.repositories.reports.db_report.students import DBStudent
-from app.repositories.reports.db_report.subjects import DBSubject
-from app.repositories.reports.db_report.timetables import DBTimeTable
 
 
 class DataBaseReport(IReportGetter):

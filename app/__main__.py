@@ -1,12 +1,12 @@
 import typer
-from app.config import GROUPS_COUNT, STUDENTS_IN_GROUP_COUNT, TYPE_REPORT
 from faker import Faker
 
+from app.config import GROUPS_COUNT, STUDENTS_IN_GROUP_COUNT, TYPE_REPORT
 from app.domain.create_group_student import FakeGroupData, FakeStudentData, Group, GroupCreator, StudentCreator
 from app.domain.create_subject_time_table import TimeTableCreator
 from app.domain.group_builder import GroupsBuilder
 from app.domain.report_creator import IReportGetter
-from app.repositories.reports.db_report.db_report import DataBaseReport
+from app.repositories.reports.db_report import DataBaseReport
 from app.repositories.reports.json_report import JsonReport
 from app.repositories.reports.pdf_report import PDFReport
 from app.repositories.reports.xlsx_report import XLSXReport

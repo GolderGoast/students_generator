@@ -4,11 +4,11 @@ from dataclasses import dataclass
 from openpyxl import load_workbook
 from pdfminer.high_level import extract_text
 
-from app.repositories.reports.db_report.db_report import DataBaseReport
-from app.repositories.reports.db_report.groups import DBGroup
-from app.repositories.reports.db_report.students import DBStudent
-from app.repositories.reports.db_report.subjects import DBSubject
-from app.repositories.reports.db_report.timetables import DBTimeTable
+from app.repositories.reports.db_report import DataBaseReport
+from app.data.models.groups import DBGroup
+from app.data.models.students import DBStudent
+from app.data.models.subjects import DBSubject
+from app.data.models.timetables import DBTimeTable
 from app.repositories.reports.json_report import JsonReport
 from app.repositories.reports.pdf_report import PDFReport
 from app.repositories.reports.xlsx_report import XLSXReport

@@ -1,7 +1,7 @@
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.repositories.reports.db_report.base_class import Base
+from app.data.models.base_class import Base
 
 
 class DBSubject(Base):
