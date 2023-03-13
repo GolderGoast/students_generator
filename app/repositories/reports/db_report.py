@@ -1,9 +1,6 @@
-import os
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from app.data.models.base_class import Base
 from app.data.models.groups import Group
 from app.data.models.students import Student
 from app.data.models.subjects import Subject
@@ -15,23 +12,11 @@ from app.domain.report_creator import IReportGetter
 class DataBaseReport(IReportGetter):
     def __init__(self, groups: list[GroupEntity], report_path: str = "report"):
         super().__init__(groups=groups, report_path=report_path)
-        self.engine = create_engine(f"sqlite:///{self.report_path}.db")
+        self.engine = create_engine("postgresql://postgres:postgres@localhost/reports")
         self.Session = sessionmaker(bind=self.engine)
         self.session = self.Session()
 
-    def _create_db(self):
-        Base.metadata.create_all(self.engine)
-
-    def _clear_db(self):
-        Base.metadata.drop_all(self.engine)
-
     def get_report(self):
-        if os.path.exists(f"{self.report_path}.db"):
-            self._clear_db()
-            self._create_db()
-        else:
-            self._create_db()
-
         for group in self.groups:
             group_for_db = Group(name=group.name)
             self.session.add(group_for_db)
