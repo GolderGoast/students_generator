@@ -27,6 +27,9 @@ jobs:
       - name: Install jq
         run: sudo apt install jq
 
+      - name: Run postgres
+        run: docker run -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=test -d postgres:13
+
       - name: Get percent coverage
         run: |
           poetry run pytest --cov app

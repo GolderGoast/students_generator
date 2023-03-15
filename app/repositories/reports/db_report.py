@@ -8,11 +8,13 @@ from app.data.models.timetables import TimeTable
 from app.domain.entities import Group as GroupEntity
 from app.domain.report_creator import IReportGetter
 
+ENGINE = "postgresql://postgres:postgres@localhost/reports"
+
 
 class DataBaseReport(IReportGetter):
-    def __init__(self, groups: list[GroupEntity], report_path: str = "report"):
+    def __init__(self, groups: list[GroupEntity], report_path: str = "report", engine: str = ENGINE):
         super().__init__(groups=groups, report_path=report_path)
-        self.engine = create_engine("postgresql://postgres:postgres@localhost/reports")
+        self.engine = create_engine(engine)
         self.Session = sessionmaker(bind=self.engine)
         self.session = self.Session()
 

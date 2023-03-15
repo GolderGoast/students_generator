@@ -12,6 +12,7 @@ from app.data.models.timetables import TimeTable
 from app.repositories.reports.json_report import JsonReport
 from app.repositories.reports.pdf_report import PDFReport
 from app.repositories.reports.xlsx_report import XLSXReport
+from app.data.models.base_class import Base
 
 
 @dataclass
@@ -156,19 +157,26 @@ def test_pdf_report(tmpdir):
     assert report_data == test_pdf_data
 
 
-def test_db_report(tmpdir):
-    file_path = tmpdir.join('report')
+def test_db_report():
+    engine = "postgresql://postgres:postgres@localhost/test"
 
-    getter = DataBaseReport(mock_groups, file_path)
-    getter.get_report()
+    getter = DataBaseReport(mock_groups, engine=engine)
+    Base.metadata.create_all(bind=getter.engine)
 
     session = getter.session
+
+    session.query(Student).delete()
+    session.query(Subject).delete()
+    session.query(TimeTable).delete()
+    session.query(Group).delete()
+    session.commit()
+
+    getter.get_report()
+
     groups_name = [i[0] for i in session.query(Group.name)]
-    students_name = [i[0] for i in session.query(Student.full_name).join(Group).filter(Group.id == 1)]
-    groups_subj = [i[0] for i in session.query(Subject.name).join(TimeTable).join(Group).filter(Group.id == 1)]
-    groups_subj2 = [i[0] for i in session.query(Subject.name).join(TimeTable).join(Group).filter(Group.id == 2)]
+    students_name = [i[0] for i in session.query(Student.full_name).join(Group)]
+    groups_subj = [i[0] for i in session.query(Subject.name).join(TimeTable).join(Group)]
 
     assert groups_name == ['MyGroup', 'MyGroup']
-    assert students_name == ['John', 'John', 'John']
-    assert groups_subj == ['Math', 'Math', 'Math']
-    assert groups_subj2 == ['Info', 'Info', 'Info']
+    assert students_name == ['John', 'John', 'John', 'John', 'John', 'John']
+    assert groups_subj == ['Math', 'Math', 'Math', 'Info', 'Info', 'Info']
