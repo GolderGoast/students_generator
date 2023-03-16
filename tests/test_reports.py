@@ -4,20 +4,21 @@ from dataclasses import dataclass
 from openpyxl import load_workbook
 from pdfminer.high_level import extract_text
 
-from app.repositories.reports.db_report import DataBaseReport
+from app.data.models.base_class import Base
 from app.data.models.groups import Group
 from app.data.models.students import Student
 from app.data.models.subjects import Subject
 from app.data.models.timetables import TimeTable
+from app.repositories.reports.db_report import DataBaseReport
 from app.repositories.reports.json_report import JsonReport
 from app.repositories.reports.pdf_report import PDFReport
 from app.repositories.reports.xlsx_report import XLSXReport
-from app.data.models.base_class import Base
 
 
 @dataclass
 class MockStudent:
     full_name: str = 'John'
+    email: str = 'abcd@mail.ru'
     age: int = 20
     gender: str = 'M'
     weight: int = 90
@@ -70,12 +71,13 @@ def test_xlsx_report(tmpdir):
 
     for sheet in wb.worksheets:
         for row in list(sheet)[1:]:
-            assert [cell.value for cell in row] == ['John', 20, 'M', 90, 180, 3.5]
+            assert [cell.value for cell in row] == ['John', 'abcd@mail.ru', 20, 'M', 90, 180, 3.5]
 
 
 test_json_data = {
     'Группа MyGroup': {
         'Студент John': {
+            "Почта": 'abcd@mail.ru',
             "Возраст": 20,
             "Пол": 'M',
             "Вес": 90,
@@ -83,6 +85,7 @@ test_json_data = {
             "Средний балл": 3.5,
         },
         'Студент John1': {
+            "Почта": 'abcd@mail.ru',
             "Возраст": 20,
             "Пол": 'M',
             "Вес": 90,
@@ -90,6 +93,7 @@ test_json_data = {
             "Средний балл": 3.5,
         },
         'Студент John2': {
+            "Почта": 'abcd@mail.ru',
             "Возраст": 20,
             "Пол": 'M',
             "Вес": 90,
@@ -99,6 +103,7 @@ test_json_data = {
     },
     'Группа MyGroup1': {
         'Студент John': {
+            "Почта": 'abcd@mail.ru',
             "Возраст": 20,
             "Пол": 'M',
             "Вес": 90,
@@ -106,6 +111,7 @@ test_json_data = {
             "Средний балл": 3.5,
         },
         'Студент John1': {
+            "Почта": 'abcd@mail.ru',
             "Возраст": 20,
             "Пол": 'M',
             "Вес": 90,
@@ -113,6 +119,7 @@ test_json_data = {
             "Средний балл": 3.5,
         },
         'Студент John2': {
+            "Почта": 'abcd@mail.ru',
             "Возраст": 20,
             "Пол": 'M',
             "Вес": 90,
@@ -136,13 +143,13 @@ def test_json_report(tmpdir):
 
 
 test_pdf_data = ['Группа MyGroup',
-                 '- John - Возраст: 20, Пол: M, Рост: 180, Вес: 90, Средний балл: 3.5',
-                 '- John - Возраст: 20, Пол: M, Рост: 180, Вес: 90, Средний балл: 3.5',
-                 '- John - Возраст: 20, Пол: M, Рост: 180, Вес: 90, Средний балл: 3.5',
+                 'John Почта: abcd@mail.ru Возраст: 20, Пол: M, Рост: 180, Вес: 90, Балл: 3.5',
+                 'John Почта: abcd@mail.ru Возраст: 20, Пол: M, Рост: 180, Вес: 90, Балл: 3.5',
+                 'John Почта: abcd@mail.ru Возраст: 20, Пол: M, Рост: 180, Вес: 90, Балл: 3.5',
                  'Группа MyGroup',
-                 '- John - Возраст: 20, Пол: M, Рост: 180, Вес: 90, Средний балл: 3.5',
-                 '- John - Возраст: 20, Пол: M, Рост: 180, Вес: 90, Средний балл: 3.5',
-                 '- John - Возраст: 20, Пол: M, Рост: 180, Вес: 90, Средний балл: 3.5']
+                 'John Почта: abcd@mail.ru Возраст: 20, Пол: M, Рост: 180, Вес: 90, Балл: 3.5',
+                 'John Почта: abcd@mail.ru Возраст: 20, Пол: M, Рост: 180, Вес: 90, Балл: 3.5',
+                 'John Почта: abcd@mail.ru Возраст: 20, Пол: M, Рост: 180, Вес: 90, Балл: 3.5']
 
 
 def test_pdf_report(tmpdir):
@@ -157,10 +164,17 @@ def test_pdf_report(tmpdir):
     assert report_data == test_pdf_data
 
 
+mock_db_groups = [
+    MockGroup([MockStudent(), MockStudent(email='abcd1@mail.ru'), MockStudent(email='abcd2@mail.ru')], mock_timetable),
+    MockGroup([MockStudent(email='abcd3@mail.ru'), MockStudent(email='abcd4@mail.ru'),
+               MockStudent(email='abcd5@mail.ru')], mock_timetable2)
+]
+
+
 def test_db_report():
     engine = "postgresql://postgres:postgres@localhost/test"
 
-    getter = DataBaseReport(mock_groups, engine=engine)
+    getter = DataBaseReport(mock_db_groups, engine=engine)
     Base.metadata.create_all(bind=getter.engine)
 
     session = getter.session

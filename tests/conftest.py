@@ -12,6 +12,7 @@ def create_mock_faker():
             self._name_male = 'John'
             self._name_female = 'Anna'
             self._group_name = 'MyGroup'
+            self._email = 'abcd@mail.ru'
 
         def name_male(self):
             return self._name_male
@@ -21,6 +22,9 @@ def create_mock_faker():
 
         def company(self):
             return self._group_name
+
+        def free_email(self):
+            return self._email
 
         @staticmethod
         def random_int(a, b):
