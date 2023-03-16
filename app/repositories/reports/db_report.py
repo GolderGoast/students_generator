@@ -27,6 +27,7 @@ class DataBaseReport(IReportGetter):
             for student in group.students:
                 student_for_db = Student(
                     full_name=student.full_name,
+                    email=student.email,
                     age=student.age,
                     gender=student.gender,
                     weight=student.weight,
