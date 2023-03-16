@@ -38,6 +38,7 @@ class JsonReport(IReportGetter):
                 report[group_name][student_name] = dict(
                     zip(
                         [
+                            "Почта",
                             "Возраст",
                             "Пол",
                             "Вес",

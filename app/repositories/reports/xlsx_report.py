@@ -13,6 +13,7 @@ class XLSXReport(IReportGetter):
             ws.append(
                 [
                     "ФИО",
+                    "Электронная почта",
                     "Возраст",
                     "Пол",
                     "Вес",

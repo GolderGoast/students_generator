@@ -26,6 +26,9 @@ class FakeStudentData(IFakeStudentDataCreator):
             return self.faker.name_male()
         return self.faker.name_female()
 
+    def get_email(self) -> str:
+        return self.faker.free_email()
+
     def get_age(self) -> int:
         return self.faker.random_int(18, 25)
 
@@ -55,13 +58,14 @@ class FakeGroupData(IFakeGroupDataCreator):
 class StudentCreator(IStudentCreator):
     def run(self) -> Student:
         name = self.faker.get_fullname()
+        email = self.faker.get_email()
         age = self.faker.get_age()
         gender = self.faker.get_gender()
         height = self.faker.get_height()
         weight = self.faker.get_weight()
         average_score = self.faker.get_average_score()
 
-        return Student(name, age, gender, weight, height, average_score)
+        return Student(name, email, age, gender, weight, height, average_score)
 
 
 class GroupCreator(IGroupCreator):

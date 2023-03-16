@@ -21,8 +21,8 @@ class PDFReport(IReportGetter):
                 pdf.cell(
                     400,
                     8,
-                    txt=f"- {student.full_name} - Возраст: {student.age}, Пол: {student.gender},"
-                    f" Рост: {student.height}, Вес: {student.weight}, Средний балл: {student.average_score}",
+                    txt=f"{student.full_name} Почта: {student.email} Возраст: {student.age}, Пол: {student.gender},"
+                    f" Рост: {student.height}, Вес: {student.weight}, Балл: {student.average_score}",
                     ln=1,
                 )
 

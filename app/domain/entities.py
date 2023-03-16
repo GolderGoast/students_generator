@@ -17,6 +17,7 @@ class Admin:
 @dataclass
 class Student:
     full_name: str
+    email: str
     age: int
     gender: str
     weight: int
@@ -48,6 +49,10 @@ class Group:
 class IFakeStudentDataCreator(ABC):
     @abstractmethod
     def get_fullname(self) -> str:
+        pass
+
+    @abstractmethod
+    def get_email(self) -> str:
         pass
 
     @abstractmethod
