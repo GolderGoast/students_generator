@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     type_report: str
 
     class Config:
-        env_file = "../.env"
+        env_file = ".env"
 
 
 settings = Settings()
