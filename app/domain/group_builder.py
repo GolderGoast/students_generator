@@ -18,11 +18,10 @@ class GroupsBuilder:
         self.timetable_creator = timetable_creator
 
     def run(self) -> list[Group]:
-        students = [self.student_creator.run() for _ in range(self.students_count)]
-
         groups = [
             self.group_creator.run(
-                students=students, timetable=self.timetable_creator.run(week=WEEK, times=TIMES, names=SUBJECTS_NAMES)
+                students=[self.student_creator.run() for _ in range(self.students_count)],
+                timetable=self.timetable_creator.run(week=WEEK, times=TIMES, names=SUBJECTS_NAMES),
             )
             for _ in range(self.groups_count)
         ]
