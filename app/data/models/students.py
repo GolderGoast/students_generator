@@ -1,5 +1,5 @@
 from sqlalchemy import ForeignKey, Integer, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.data.models.base_class import Base
 
@@ -15,7 +15,9 @@ class Student(Base):
     weight: Mapped[int]
     height: Mapped[int]
     average_score: Mapped[float]
+    is_admin: Mapped[bool] = mapped_column(default=False)
     group: Mapped[int] = mapped_column(Integer, ForeignKey("groups.id"))
+    admin = relationship("Admin", uselist=False)
 
     def __repr__(self):
         return (
