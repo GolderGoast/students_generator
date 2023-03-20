@@ -27,6 +27,16 @@ jobs:
       - name: Run postgres
         run: docker run -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=test -d postgres:13
 
+      - name: Add env vars
+        run: |
+          echo GROUPS_COUNT=10 >> $GITHUB_ENV
+          echo STUDENTS_IN_GROUP_COUNT=30 >> $GITHUB_ENV
+          echo TYPE_REPORT=db >> $GITHUB_ENV
+          echo USER_DB=postgres >> $GITHUB_ENV
+          echo PASSWORD_DB=postgres >> $GITHUB_ENV
+          echo NAME_DB=test >> $GITHUB_ENV
+          echo HOST_DB=localhost >> $GITHUB_ENV
+
       - name: Get percent coverage
         run: |
           poetry run pytest --cov app
