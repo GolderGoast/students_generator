@@ -9,11 +9,17 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: test
 
+    healthcheck:
+      test: ["CMD", "psql", "-U", "${POSTGRES_USER:-postgres}", "-d", "${POSTGRES_DB:-test}"]
+      timeout: 10s
+      interval: 5s
+      retries: 3
+
   service_tests:
-    image: mytests
     build:
       context: .
     environment:
       PYTHONUNBUFFERED: 1
     depends_on:
-      - service_db
+      service_db:
+        condition: service_healthy
