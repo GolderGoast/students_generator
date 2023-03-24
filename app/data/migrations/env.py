@@ -3,7 +3,7 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-from app.config import HOST_DB, NAME_DB, PASSWORD_DB, USER_DB
+from app.config import DSN_DB
 from app.data.models.base_class import Base
 
 # this is the Alembic Config object, which provides
@@ -11,10 +11,7 @@ from app.data.models.base_class import Base
 config = context.config
 
 section = config.config_ini_section
-config.set_section_option(section, "USER_DB", USER_DB)
-config.set_section_option(section, "PASS_DB", PASSWORD_DB)
-config.set_section_option(section, "HOST_DB", HOST_DB)
-config.set_section_option(section, "NAME_DB", NAME_DB)
+config.set_section_option(section, "DSN_DB", DSN_DB)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

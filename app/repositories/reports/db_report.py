@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from app.config import HOST_DB, NAME_DB, PASSWORD_DB, USER_DB
+from app.config import DSN_DB
 from app.data.models.groups import Group
 from app.data.models.students import Student
 from app.data.models.subjects import Subject
@@ -9,11 +9,9 @@ from app.data.models.timetables import TimeTable
 from app.domain.entities import Group as GroupEntity
 from app.domain.report_creator import IReportGetter
 
-ENGINE = f"postgresql://{USER_DB}:{PASSWORD_DB}@{HOST_DB}/{NAME_DB}"
-
 
 class DataBaseReport(IReportGetter):
-    def __init__(self, groups: list[GroupEntity], report_path: str = "report", engine: str = ENGINE):
+    def __init__(self, groups: list[GroupEntity], report_path: str = "report", engine: str = DSN_DB):
         super().__init__(groups=groups, report_path=report_path)
         self.engine = create_engine(engine)
         self.Session = sessionmaker(bind=self.engine)
