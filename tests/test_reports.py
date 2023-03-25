@@ -172,7 +172,7 @@ mock_db_groups = [
 
 
 def test_db_report():
-    engine = "postgresql://postgres:postgres@service_db:5432/test"
+    engine = "postgresql://postgres:postgres@localhost/test"
 
     getter = DataBaseReport(mock_db_groups, engine=engine)
     Base.metadata.create_all(bind=getter.engine)
