@@ -1,3 +1,4 @@
+from passlib.hash import pbkdf2_sha256
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -27,6 +28,7 @@ class DataBaseReport(IReportGetter):
                 student_for_db = Student(
                     full_name=student.full_name,
                     email=student.email,
+                    password=pbkdf2_sha256.hash(student.password),
                     age=student.age,
                     gender=student.gender,
                     weight=student.weight,

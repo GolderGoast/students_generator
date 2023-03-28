@@ -10,6 +10,7 @@ class Student(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     full_name: Mapped[str] = mapped_column(String(50))
     email: Mapped[str] = mapped_column(unique=True)
+    password: Mapped[str]
     age: Mapped[int]
     gender: Mapped[str] = mapped_column(String(1))
     weight: Mapped[int]

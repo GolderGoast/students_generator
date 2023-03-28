@@ -27,6 +27,7 @@ class JsonReport(IReportGetter):
             report[group_name] = {}
             for student in group.students:
                 student_data = list(vars(student).values())[1:]
+                student_data.pop(1)
 
                 student_name = self.__add_num_if_key_in_dict(
                     key=student.full_name,

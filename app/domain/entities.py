@@ -18,6 +18,7 @@ class Admin:
 class Student:
     full_name: str
     email: str
+    password: str
     age: int
     gender: str
     weight: int
@@ -53,6 +54,10 @@ class IFakeStudentDataCreator(ABC):
 
     @abstractmethod
     def get_email(self) -> str:
+        pass
+
+    @abstractmethod
+    def get_password(self) -> str:
         pass
 
     @abstractmethod
