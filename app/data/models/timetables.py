@@ -1,7 +1,7 @@
 from sqlalchemy import ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.data.models.base_class import Base
+from data.models.base_class import Base
 
 
 class TimeTable(Base):

@@ -1,6 +1,6 @@
 from openpyxl.workbook import Workbook
 
-from app.domain.report_creator import IReportGetter
+from domain.report_creator import IReportGetter
 
 
 class XLSXReport(IReportGetter):

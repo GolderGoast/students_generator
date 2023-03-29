@@ -1,6 +1,6 @@
 import json
 
-from app.domain.report_creator import IReportGetter
+from domain.report_creator import IReportGetter
 
 
 class JsonReport(IReportGetter):

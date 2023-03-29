@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from app.domain.entities import Group
+from domain.entities import Group
 
 
 class IReportGetter(ABC):

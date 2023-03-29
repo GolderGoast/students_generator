@@ -2,7 +2,7 @@ from random import choice, uniform
 
 from faker import Faker
 
-from app.domain.entities import (
+from domain.entities import (
     Gender,
     Group,
     IFakeGroupDataCreator,

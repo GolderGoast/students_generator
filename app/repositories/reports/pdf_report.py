@@ -1,6 +1,6 @@
 import fpdf
 
-from app.domain.report_creator import IReportGetter
+from domain.report_creator import IReportGetter
 
 
 class PDFReport(IReportGetter):
@@ -8,8 +8,8 @@ class PDFReport(IReportGetter):
         fpdf.set_global("FPDF_CACHE_MODE", 1)
 
         pdf = fpdf.FPDF()
-        pdf.add_font("DejaVu", "", "app/resource/fonts_for_pdf/DejaVuSansCondensed.ttf", uni=True)
-        pdf.add_font("DejaVu", "B", "app/resource/fonts_for_pdf/DejaVuSansCondensed-Bold.ttf", uni=True)
+        pdf.add_font("DejaVu", "", "resource/fonts_for_pdf/DejaVuSansCondensed.ttf", uni=True)
+        pdf.add_font("DejaVu", "B", "resource/fonts_for_pdf/DejaVuSansCondensed-Bold.ttf", uni=True)
 
         for group in self.groups:
             pdf.add_page()

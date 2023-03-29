@@ -2,13 +2,13 @@ from passlib.hash import pbkdf2_sha256
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from app.config import DSN_DB
-from app.data.models.groups import Group
-from app.data.models.students import Student
-from app.data.models.subjects import Subject
-from app.data.models.timetables import TimeTable
-from app.domain.entities import Group as GroupEntity
-from app.domain.report_creator import IReportGetter
+from config import DSN_DB
+from data.models.groups import Group
+from data.models.students import Student
+from data.models.subjects import Subject
+from data.models.timetables import TimeTable
+from domain.entities import Group as GroupEntity
+from domain.report_creator import IReportGetter
 
 
 class DataBaseReport(IReportGetter):
