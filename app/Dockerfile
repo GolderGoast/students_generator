@@ -15,3 +15,7 @@ COPY poetry.lock pyproject.toml /
 RUN poetry config virtualenvs.create false && poetry install --no-root --no-interaction --no-ansi
 
 COPY . .
+
+EXPOSE 5000
+
+CMD python3 __main__.py

@@ -26,6 +26,8 @@ services:
   app:
     build:
       context: ./app
+    ports:
+      - "5000:5000"
     <<: *env
     depends_on:
       db:
