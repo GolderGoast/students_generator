@@ -18,4 +18,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD python3 __main__.py
+CMD  gunicorn --bind 0.0.0.0:5000 main:app
