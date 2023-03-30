@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: student-generator:latest
+  IMAGE_NAME: student-generator
 
 jobs:
   build-and-push-image:
@@ -37,5 +37,5 @@ jobs:
         with:
           context: ./app
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: latest
           labels: ${{ steps.meta.outputs.labels }}
