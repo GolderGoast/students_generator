@@ -39,6 +39,7 @@ jobs:
 
       - name: Get percent coverage
         run: |
+          export PYTHONPATH=$PYTHONPATH:$(pwd)/app
           poetry run pytest --cov app
           poetry run coverage json
           TOTAL=$(cat coverage.json | jq .totals | jq .percent_covered)
