@@ -17,5 +17,3 @@ RUN poetry config virtualenvs.create false && poetry install --no-root --no-inte
 COPY . .
 
 EXPOSE 5000
-
-CMD  gunicorn --bind 0.0.0.0:5000 main:app

@@ -1,6 +1,7 @@
 from random import choice
 
-from domain.entities import ISubjectCreator, ISubjectDataCreator, ITimeTableCreator, Subject, TimeTable
+from domain.entities import Subject, TimeTable
+from domain.interfaces import ISubjectCreator, ISubjectDataCreator, ITimeTableCreator
 
 SUBJECTS_NAMES = ("Математика", "Русский язык", "Литература", "История", "Информатика", "Биология", "Физкультура", "")
 WEEK = ("Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс")

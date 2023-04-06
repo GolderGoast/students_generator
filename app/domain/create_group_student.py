@@ -2,16 +2,8 @@ from random import choice, uniform
 
 from faker import Faker
 
-from domain.entities import (
-    Gender,
-    Group,
-    IFakeGroupDataCreator,
-    IFakeStudentDataCreator,
-    IGroupCreator,
-    IStudentCreator,
-    Student,
-    TimeTable,
-)
+from domain.entities import Gender, Group, Student, TimeTable
+from domain.interfaces import IFakeGroupDataCreator, IFakeStudentDataCreator, IGroupCreator, IStudentCreator
 
 
 class FakeStudentData(IFakeStudentDataCreator):

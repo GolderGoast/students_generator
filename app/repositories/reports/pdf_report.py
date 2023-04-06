@@ -1,6 +1,6 @@
 import fpdf
 
-from domain.report_creator import IReportGetter
+from domain.interfaces import IReportGetter
 
 
 class PDFReport(IReportGetter):

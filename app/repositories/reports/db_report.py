@@ -8,7 +8,7 @@ from data.models.students import Student
 from data.models.subjects import Subject
 from data.models.timetables import TimeTable
 from domain.entities import Group as GroupEntity
-from domain.report_creator import IReportGetter
+from domain.interfaces import IReportGetter
 
 
 class DataBaseReport(IReportGetter):

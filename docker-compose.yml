@@ -15,29 +15,33 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     ports:
       - "5432:5432"
-    <<: *env
-
     healthcheck:
       test: ["CMD", "psql", "-U", "${POSTGRES_USER:-postgres}", "-d", "${POSTGRES_DB:-reports}"]
       timeout: 10s
       interval: 5s
       retries: 3
+    <<: *env
 
   app:
     build:
       context: ./app
-    ports:
-      - "5000:5000"
-    <<: *env
+    expose:
+      - 5000
+    command: >
+      bash -c "alembic upgrade head
+      && gunicorn --bind 0.0.0.0:5000 api.main:app"
     depends_on:
       db:
         condition: service_healthy
+    <<: *env
 
   nginx:
     build:
       context: ./nginx
     ports:
-      - "8080:80"
+      - "80:80"
+    depends_on:
+      - app
 
 volumes:
   postgres_data:
