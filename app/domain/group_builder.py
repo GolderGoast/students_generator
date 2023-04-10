@@ -1,5 +1,6 @@
 from domain.create_subject_time_table import SUBJECTS_NAMES, TIMES, WEEK
-from domain.entities import Group, IGroupCreator, IStudentCreator, ITimeTableCreator
+from domain.entities import Group
+from domain.interfaces import IGroupCreator, IStudentCreator, ITimeTableCreator
 
 
 class GroupsBuilder:

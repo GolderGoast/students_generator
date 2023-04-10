@@ -5,7 +5,7 @@ from config import GROUPS_COUNT, STUDENTS_IN_GROUP_COUNT, TYPE_REPORT
 from domain.create_group_student import FakeGroupData, FakeStudentData, Group, GroupCreator, StudentCreator
 from domain.create_subject_time_table import TimeTableCreator
 from domain.group_builder import GroupsBuilder
-from domain.report_creator import IReportGetter
+from domain.interfaces import IReportGetter
 from repositories.reports.types import REPORT_TYPES
 
 app = Flask(__name__)
