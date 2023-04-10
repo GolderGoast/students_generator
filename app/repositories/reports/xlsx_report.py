@@ -1,9 +1,9 @@
 from openpyxl.workbook import Workbook
 
-from domain.interfaces import IReportGetter
+from domain.interfaces import IReportBuilder
 
 
-class XLSXReport(IReportGetter):
+class XLSXReport(IReportBuilder):
     def get_report(self) -> None:
         wb = Workbook()
         ws = wb.active

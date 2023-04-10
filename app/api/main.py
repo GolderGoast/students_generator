@@ -5,7 +5,7 @@ from config import GROUPS_COUNT, STUDENTS_IN_GROUP_COUNT, TYPE_REPORT
 from domain.create_group_student import FakeGroupData, FakeStudentData, Group, GroupCreator, StudentCreator
 from domain.create_subject_time_table import TimeTableCreator
 from domain.group_builder import GroupsBuilder
-from domain.interfaces import IReportGetter
+from domain.interfaces import IReportBuilder
 from repositories.reports.types import REPORT_TYPES
 
 app = Flask(__name__)
@@ -34,7 +34,7 @@ def main(gc: int = GROUPS_COUNT, sc: int = STUDENTS_IN_GROUP_COUNT, rtype: str =
     )
     groups: list[Group] = builder.run()
 
-    report: IReportGetter = REPORT_TYPES[rtype](groups)
+    report: IReportBuilder = REPORT_TYPES[rtype](groups)
     report.get_report()
 
     return jsonify({"message": "Отчет готов"})

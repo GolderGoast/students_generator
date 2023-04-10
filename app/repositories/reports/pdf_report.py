@@ -1,9 +1,9 @@
 import fpdf
 
-from domain.interfaces import IReportGetter
+from domain.interfaces import IReportBuilder
 
 
-class PDFReport(IReportGetter):
+class PDFReport(IReportBuilder):
     def get_report(self):
         fpdf.set_global("FPDF_CACHE_MODE", 1)
 

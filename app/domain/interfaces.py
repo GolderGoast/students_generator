@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from domain.entities import Group, Student, Subject, TimeTable
 
 
-class IReportGetter(ABC):
+class IReportBuilder(ABC):
     def __init__(self, groups: list[Group], report_path: str = "report"):
         self.groups = groups
         self.report_path = report_path

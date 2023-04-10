@@ -1,9 +1,9 @@
 import json
 
-from domain.interfaces import IReportGetter
+from domain.interfaces import IReportBuilder
 
 
-class JsonReport(IReportGetter):
+class JsonReport(IReportBuilder):
     @staticmethod
     def __add_num_if_key_in_dict(key: str, user_dict: dict, prefix: str, count: int) -> str:
         desired_key = f"{prefix} {key}"

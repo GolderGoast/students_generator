@@ -8,10 +8,10 @@ from data.models.students import Student
 from data.models.subjects import Subject
 from data.models.timetables import TimeTable
 from domain.entities import Group as GroupEntity
-from domain.interfaces import IReportGetter
+from domain.interfaces import IReportBuilder
 
 
-class DataBaseReport(IReportGetter):
+class DataBaseReport(IReportBuilder):
     def __init__(self, groups: list[GroupEntity], report_path: str = "report", engine: str = DSN_DB):
         super().__init__(groups=groups, report_path=report_path)
         self.engine = create_engine(engine)
