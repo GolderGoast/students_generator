@@ -7,15 +7,10 @@ from domain.create_group_student import FakeGroupData, FakeStudentData, Group, G
 from domain.create_subject_time_table import TimeTableCreator
 from domain.group_builder import GroupsBuilder
 from domain.report_creator import IReportGetter
-from repositories.reports.db_report import DataBaseReport
-from repositories.reports.json_report import JsonReport
-from repositories.reports.pdf_report import PDFReport
-from repositories.reports.xlsx_report import XLSXReport
+from repositories.reports.types import REPORT_TYPES
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
-
-REPORT_TYPES = {"xlsx": XLSXReport, "json": JsonReport, "pdf": PDFReport, "db": DataBaseReport}
 
 typer_app = typer.Typer()
 
