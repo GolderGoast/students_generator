@@ -37,7 +37,9 @@ services:
     build:
       context: ./nginx
     ports:
-      - "8080:80"
+      - "80:80"
+    depends_on:
+      - app
 
 volumes:
   postgres_data:
