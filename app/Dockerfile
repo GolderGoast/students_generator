@@ -12,10 +12,8 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 COPY poetry.lock pyproject.toml /
-RUN poetry config virtualenvs.create false && poetry install --no-root --no-interaction --no-ansi
+RUN poetry config virtualenvs.create false && poetry install --only main --no-root --no-interaction --no-ansi
 
 COPY . .
 
 EXPOSE 5000
-
-CMD  gunicorn --bind 0.0.0.0:5000 api.main:app
