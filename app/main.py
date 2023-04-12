@@ -1,7 +1,7 @@
 import typer
 from faker import Faker
 
-from config import GROUPS_COUNT, STUDENTS_IN_GROUP_COUNT, TYPE_REPORT
+from config import settings
 from domain.create_group_student import FakeGroupData, FakeStudentData, Group, GroupCreator, StudentCreator
 from domain.create_subject_time_table import TimeTableCreator
 from domain.group_builder import GroupsBuilder
@@ -12,7 +12,11 @@ app = typer.Typer()
 
 
 @app.command()
-def main(gc: int = GROUPS_COUNT, sc: int = STUDENTS_IN_GROUP_COUNT, rtype: str = TYPE_REPORT) -> None:
+def main(
+    gc: int = settings.app.groups_count,
+    sc: int = settings.app.students_in_group_count,
+    rtype: str = settings.app.type_report,
+) -> None:
     fake_student_data = FakeStudentData(faker=Faker("ru_RU"))
     fake_group_data = FakeGroupData(faker=Faker("ru_RU"))
 

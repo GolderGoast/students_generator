@@ -3,10 +3,13 @@ from typing import Any
 from pydantic import BaseSettings, PostgresDsn, validator
 
 
-class Settings(BaseSettings):
+class AppSettings(BaseSettings):
     groups_count: int = 10
     students_in_group_count: int = 30
     type_report: str = "db"
+
+
+class DBSettings(BaseSettings):
     postgres_scheme: str = "postgresql"
     postgres_user: str = "postgres"
     postgres_password: str = "postgres"
@@ -30,10 +33,9 @@ class Settings(BaseSettings):
         )
 
 
+class Settings(BaseSettings):
+    app: AppSettings = AppSettings()
+    db: DBSettings = DBSettings()
+
+
 settings = Settings()
-
-GROUPS_COUNT = settings.groups_count
-STUDENTS_IN_GROUP_COUNT = settings.students_in_group_count
-TYPE_REPORT = settings.type_report
-
-DSN_DB = settings.dsn

@@ -3,7 +3,7 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-from config import DSN_DB
+from config import settings
 from data.models.base_class import Base
 
 # this is the Alembic Config object, which provides
@@ -11,7 +11,7 @@ from data.models.base_class import Base
 config = context.config
 
 section = config.config_ini_section
-config.set_section_option(section, "DSN_DB", DSN_DB)
+config.set_section_option(section, "DSN_DB", settings.db.dsn)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
