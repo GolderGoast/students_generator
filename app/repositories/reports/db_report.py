@@ -2,7 +2,7 @@ from passlib.hash import pbkdf2_sha256
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from config import DSN_DB
+from config import settings
 from data.models.groups import Group
 from data.models.students import Student
 from data.models.subjects import Subject
@@ -12,7 +12,7 @@ from domain.interfaces import IReportBuilder
 
 
 class DataBaseReport(IReportBuilder):
-    def __init__(self, groups: list[GroupEntity], report_path: str = "report", engine: str = DSN_DB):
+    def __init__(self, groups: list[GroupEntity], report_path: str = "report", engine: str = settings.db.dsn):
         super().__init__(groups=groups, report_path=report_path)
         self.engine = create_engine(engine)
         self.Session = sessionmaker(bind=self.engine)
