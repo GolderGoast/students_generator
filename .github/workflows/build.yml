@@ -7,7 +7,7 @@ on:
 env:
   REGISTRY: ghcr.io
   APP_IMAGE_NAME: ${{ github.repository }}
-  NGINX_IMAGE_NAME: nginx
+  NGINX_IMAGE_NAME: goldergoast/nginx
 
 jobs:
   build-and-push-image:
@@ -50,7 +50,7 @@ jobs:
      -  name: Build and push Docker image nginx
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          context: ./app
+          context: ./nginx
           push: true
           tags: ${{ steps.meta_nginx.outputs.tags }}
           labels: ${{ steps.meta_nginx.outputs.labels }}
