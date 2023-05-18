@@ -1,0 +1,38 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ master ]
+  workflow_run:
+    workflows: [ build ]
+    types:
+      - completed
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      -  name: Checkout repository
+         uses: actions/checkout@v3
+
+      -  name: copy docker-compose.yaml file to remote
+         uses: appleboy/scp-action@master
+         with:
+           host: ${{ secrets.HOST }}
+           username: ${{ secrets.USER }}
+           key: ${{ secrets.SSH_KEY }}
+           source: "./docker-compose.prod.yaml"
+           target: "./code/"
+
+      - name: run app
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd code
+            docker-compose -f docker-compose.prod.yml down
+            docker-compose -f docker-compose.prod.yml up -d
